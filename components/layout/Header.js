@@ -10,8 +10,10 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const homeRef = useRef(null);
+  const aboutRef = useRef(null);
   const contactRef = useRef(null);
   const blogRef = useRef(null);
+  const annotationsRef = useRef({});
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -20,33 +22,43 @@ export default function Header() {
   // Navigation items
   const navItems = [
     { name: 'Home', href: '/', ref: homeRef },
+    { name: 'About', href: '/about', ref: aboutRef },
     { name: 'Contact', href: '/contact', ref: contactRef },
     { name: 'Blog', href: '/blog', ref: blogRef },
   ];
 
   useEffect(() => {
-    // Add rough annotation to active nav item
-    navItems.forEach(({ href, ref }) => {
-      if (ref.current) {
-        // Clear any existing annotations
-        const existingAnnotation = ref.current.querySelector('.rough-annotation');
-        if (existingAnnotation) {
-          existingAnnotation.remove();
-        }
-
-        // Add annotation to active item
-        if (pathname === href) {
-          const annotation = annotate(ref.current, {
-            type: 'underline',
-            color: '#3B82F6',
-            strokeWidth: 2,
-            padding: [2, 4],
-            animationDuration: 800,
-          });
-          annotation.show();
-        }
+    // Clear all existing annotations first
+    Object.values(annotationsRef.current).forEach(annotation => {
+      if (annotation && annotation.hide) {
+        annotation.hide();
       }
     });
+    annotationsRef.current = {};
+
+    // Add annotation only to the current active item
+    navItems.forEach(({ href, ref, name }) => {
+      if (ref.current && pathname === href) {
+        const annotation = annotate(ref.current, {
+          type: 'underline',
+          color: '#3B82F6',
+          strokeWidth: 2,
+          padding: [2, 4],
+          animationDuration: 800,
+        });
+        annotation.show();
+        annotationsRef.current[name] = annotation;
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      Object.values(annotationsRef.current).forEach(annotation => {
+        if (annotation && annotation.hide) {
+          annotation.hide();
+        }
+      });
+    };
   }, [pathname]);
 
   return (
