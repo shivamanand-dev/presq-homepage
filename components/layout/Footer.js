@@ -31,7 +31,7 @@ export default function Footer() {
     "contact": {
       "helpText": "Need help or have a question?",
       "phone": "+91 8448334698",
-      "email": "admin@presq.co.in"
+      "email": "info@presq.co.in"
     },
     "copyright": "© 2025 - PreSQ Innovation Private Limited"
   };
