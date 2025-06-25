@@ -70,7 +70,7 @@ export default function ClientLogoCarousel() {
           </h2>
           
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            We're proud to partner with renowned brands and deliver exceptional digital solutions that drive their success.
+            We&apos;re proud to partner with renowned brands and deliver exceptional digital solutions that drive their success.
           </p>
         </div>
 

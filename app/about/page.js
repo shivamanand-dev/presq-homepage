@@ -152,7 +152,7 @@ export default function About() {
             Ready to Transform Your Digital Presence?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Partner with PreSQ Innovation to bring your vision to life and achieve your online goals. Let's create something amazing together!
+            Partner with PreSQ Innovation to bring your vision to life and achieve your online goals. Let&apos;s create something amazing together!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

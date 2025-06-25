@@ -68,12 +68,12 @@ export default function WhyUsSection() {
           <h2 className="text-5xl lg:text-6xl font-bold mb-6">
             <span className="text-gray-900">Why</span>{' '}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              We're Different
+              We&apos;re Different
             </span>
           </h2>
           
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We don't just build websites – we craft digital experiences that transform businesses and drive real results. Here's what sets us apart.
+            We don&apos;t just build websites – we craft digital experiences that transform businesses and drive real results. Here&apos;s what sets us apart.
           </p>
         </div>
 
@@ -194,7 +194,7 @@ export default function WhyUsSection() {
                 Ready to Experience the PreSQ Difference?
               </h3>
               <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                Join 50+ satisfied clients who've transformed their digital presence with our expert solutions.
+                Join 50+ satisfied clients who&apos;ve transformed their digital presence with our expert solutions.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
