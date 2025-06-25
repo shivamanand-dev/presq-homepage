@@ -121,8 +121,39 @@ export default function HeroSection() {
                     <div className="absolute inset-4 rounded-full border-4 border-blue-400/40 animate-spin" style={{ animationDuration: '10s' }}>
                       <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm flex items-center justify-center">
                         <div className="text-center">
-                          <div className="text-xl md:text-2xl font-bold text-white mb-2">PreSQ</div>
-                          <div className="text-sm text-gray-300">Innovation</div>
+                          <svg className="w-full h-full" viewBox="0 0 320 320">
+                      <defs>
+                        <path
+                          id="outer-circle"
+                          d="M 160,160 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"
+                        />
+                      </defs>
+                      <text className="fill-gray-300 text-lg font-bold tracking-wider" style={{ fontSize: '16px' }}>
+                        <textPath href="#outer-circle" startOffset="0%">
+                          PRESQ INNOVATION • DIGITAL SOLUTIONS • WEB DEVELOPMENT • 
+                        </textPath>
+                      </text>
+                    </svg>
+                    {/* Inner Seal Ring */}
+                  <div className="absolute inset-8 rounded-full border-4 border-purple-500/30 bg-none animate-spin" style={{ animationDuration: '40s', animationDirection: 'reverse' }}>
+                    
+                    {/* Inner Text Ring - Services */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg className="w-full h-full" viewBox="0 0 200 200">
+                        <defs>
+                          <path
+                            id="inner-circle"
+                            d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
+                          />
+                        </defs>
+                        <text className="fill-gray-500 text-sm font-semibold tracking-wide" style={{ fontSize: '12px' }}>
+                          <textPath href="#inner-circle" startOffset="0%">
+                            MOBILE APPS • SEO • MARKETING • DESIGN • 
+                          </textPath>
+                        </text>
+                      </svg>
+                    </div>
+                  </div>
                         </div>
                       </div>
                     </div>
