@@ -102,11 +102,39 @@ export default function AboutSection() {
                     {/* Core */}
                     <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 border-4 border-white shadow-2xl flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                          PreSQ
-                        </div>
-                        <div className="text-sm text-gray-600 font-medium">Innovation</div>
-                        <div className="text-xs text-gray-500 mt-1">Est. 2024</div>
+                         <svg className="w-full h-full" viewBox="0 0 320 320">
+                      <defs>
+                        <path
+                          id="outer-circle"
+                          d="M 160,160 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"
+                        />
+                      </defs>
+                      <text className="fill-gray-800 text-lg font-bold tracking-wider" style={{ fontSize: '16px' }}>
+                        <textPath href="#outer-circle" startOffset="0%">
+                          PRESQ INNOVATION • DIGITAL SOLUTIONS • WEB DEVELOPMENT • 
+                        </textPath>
+                      </text>
+                    </svg>
+
+                    <div className="absolute inset-8 rounded-full border-4 border-purple-500/30 bg-none animate-spin" style={{ animationDuration: '40s', animationDirection: 'reverse' }}>
+                    
+                    {/* Inner Text Ring - Services */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg className="w-full h-full" viewBox="0 0 200 200">
+                        <defs>
+                          <path
+                            id="inner-circle"
+                            d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
+                          />
+                        </defs>
+                        <text className="fill-gray-500 text-base font-semibold tracking-wide">
+                          <textPath href="#inner-circle" startOffset="0%">
+                            MOBILE APPS • SEO • MARKETING • DESIGN • 
+                          </textPath>
+                        </text>
+                      </svg>
+                    </div>
+                  </div>
                       </div>
                     </div>
                   </div>
