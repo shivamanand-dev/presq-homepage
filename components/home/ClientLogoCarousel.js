@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Star, Award } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ClientLogoCarousel() {
   const [isPaused, setIsPaused] = useState(false);
@@ -179,13 +180,15 @@ export default function ClientLogoCarousel() {
           <p className="text-gray-600 mb-6 text-lg">
             Ready to join our family of successful partners?
           </p>
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
-            <span className="relative z-10 flex items-center">
-              Start Your Project
-              <Star className="w-5 h-5 ml-2 group-hover:rotate-12 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
+          <Link href="/contact">
+            <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+              <span className="relative z-10 flex items-center">
+                Start Your Project
+                <Star className="w-5 h-5 ml-2 group-hover:rotate-12 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+          </Link>
         </div>
       </div>
 

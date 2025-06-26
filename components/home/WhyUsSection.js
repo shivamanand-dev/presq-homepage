@@ -1,6 +1,7 @@
 "use client";
 
 import { Shield, Zap, Users, Clock, Award, CheckCircle, ArrowRight, Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function WhyUsSection() {
   const reasons = [
@@ -198,12 +199,14 @@ export default function WhyUsSection() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="group relative px-8 py-4 bg-white text-blue-600 rounded-full font-semibold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                  <span className="relative z-10 flex items-center">
-                    Start Your Project
-                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </button>
+                <Link href="/contact">
+                  <button className="group relative px-8 py-4 bg-white text-blue-600 rounded-full font-semibold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                    <span className="relative z-10 flex items-center">
+                      Start Your Project
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </button>
+                </Link>
                 
                 <button className="px-8 py-4 border-2 border-white/30 rounded-full font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:border-white/50">
                   View Our Portfolio

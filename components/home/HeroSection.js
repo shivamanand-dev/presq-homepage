@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronDown, Code, Smartphone, Search, Globe, Zap, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -79,13 +80,15 @@ export default function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
-                <span className="relative z-10 flex items-center justify-center">
-                  Get Started
-                  <ArrowRight className="w-4 md:w-5 h-4 md:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+              <Link href="/contact">
+                <button className="group relative px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+                  <span className="relative z-10 flex items-center justify-center">
+                    Get Started
+                    <ArrowRight className="w-4 md:w-5 h-4 md:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </Link>
               
               <button className="px-6 md:px-8 py-3 md:py-4 border-2 border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:border-white/40">
                 View Our Work
@@ -190,11 +193,13 @@ export default function HeroSection() {
 
             {/* Get Quote Floating Button - Slower Animation */}
             <div className="absolute bottom-4 md:bottom-10 right-4 md:right-10">
-              <button className="group w-20 md:w-24 h-20 md:h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex flex-col items-center justify-center text-white font-semibold text-xs md:text-sm transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/25" style={{ animation: 'bounce 3s infinite' }}>
-                <span>Get A</span>
-                <span>Quote</span>
-                <ChevronDown className="w-3 md:w-4 h-3 md:h-4 mt-1 group-hover:translate-y-1 transition-transform" />
-              </button>
+              <Link href="/contact">
+                <button className="group w-20 md:w-24 h-20 md:h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex flex-col items-center justify-center text-white font-semibold text-xs md:text-sm transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/25" style={{ animation: 'bounce 3s infinite' }}>
+                  <span>Get A</span>
+                  <span>Quote</span>
+                  <ChevronDown className="w-3 md:w-4 h-3 md:h-4 mt-1 group-hover:translate-y-1 transition-transform" />
+                </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Phone, Mail, MapPin } from 'lucide-react'
 import Link from 'next/link';
 
 export default function Footer() {
-  // JSON data
+  // Updated JSON data with social media links
   const footerData = {
     "company": "PreSQ Innovation",
     "description": "Expert Web Development, SEO, and Digital Marketing Services Tailored for Your Success.",
@@ -12,7 +12,20 @@ export default function Footer() {
       "terms": "Terms and Conditions",
       "privacy": "Privacy Policy"
     },
-    "socialMedia": ["Facebook", "X", "Instagram"],
+    "socialMedia": [
+      {
+        "name": "Facebook", 
+        "link": "https://www.facebook.com/presqinnovation/"
+      }, 
+      {
+        "name": "X", 
+        "link": "https://x.com/PreSQInnovation"
+      }, 
+      {
+        "name": "Instagram", 
+        "link": "https://www.instagram.com/presq.co.in/"
+      }
+    ],
     "webDesignThemes": [
       "Corporate",
       "E-Commerce",
@@ -158,7 +171,7 @@ export default function Footer() {
               {/* Social Media Icons */}
               <div className="flex space-x-4">
                 {footerData.socialMedia.map((platform, index) => {
-                  const IconComponent = socialIcons[platform];
+                  const IconComponent = socialIcons[platform.name];
                   const gradients = [
                     'from-blue-500 to-blue-600',
                     'from-gray-700 to-gray-800',
@@ -167,10 +180,12 @@ export default function Footer() {
                   
                   return (
                     <a
-                      key={platform}
-                      href="#"
+                      key={platform.name}
+                      href={platform.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`group w-12 h-12 bg-gradient-to-r ${gradients[index]} rounded-lg flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all duration-300`}
-                      aria-label={`Follow us on ${platform}`}
+                      aria-label={`Follow us on ${platform.name}`}
                     >
                       <IconComponent className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
                     </a>

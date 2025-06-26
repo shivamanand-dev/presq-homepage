@@ -94,9 +94,11 @@ export default function Header() {
 
           {/* CTA Button and Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
-            <button className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-              Get a Quote
-            </button>
+            <Link href="/contact">
+              <button className="hidden md:inline-flex bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
+                Get a Quote
+              </button>
+            </Link>
             
             {/* Mobile menu button */}
             <button
@@ -125,9 +127,11 @@ export default function Header() {
                 {name}
               </Link>
             ))}
-            <button className="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-3 rounded-lg font-medium">
-              Get a Quote
-            </button>
+            <Link href="/contact">
+              <button className="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-3 rounded-lg font-medium">
+                Get a Quote
+              </button>
+            </Link>
           </div>
         </div>
       )}
