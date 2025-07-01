@@ -90,9 +90,11 @@ export default function HeroSection() {
                 </button>
               </Link>
               
-              <button className="px-6 md:px-8 py-3 md:py-4 border-2 border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:border-white/40">
-                View Our Work
-              </button>
+              <Link href="/work">
+                <button className="px-6 md:px-8 py-3 md:py-4 border-2 border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all duration-300 hover:border-white/40">
+                  View Our Work
+                </button>
+              </Link>
             </div>
 
             {/* Stats */}

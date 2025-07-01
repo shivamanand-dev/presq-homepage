@@ -11,6 +11,7 @@ export default function Header() {
   const pathname = usePathname();
   const homeRef = useRef(null);
   const aboutRef = useRef(null);
+  const workRef = useRef(null);
   const contactRef = useRef(null);
   const blogRef = useRef(null);
   const annotationsRef = useRef({});
@@ -23,6 +24,7 @@ export default function Header() {
   const navItems = [
     { name: 'Home', href: '/', ref: homeRef },
     { name: 'About', href: '/about', ref: aboutRef },
+    { name: 'Work', href: '/work', ref: workRef },
     { name: 'Contact', href: '/contact', ref: contactRef },
     { name: 'Blog', href: '/blog', ref: blogRef },
   ];
