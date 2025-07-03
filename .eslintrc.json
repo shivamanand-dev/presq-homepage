@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:security/recommended",
+    "plugin:sonarjs/recommended"
+  ],
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "prettier/prettier": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "unicorn/prefer-node-protocol": "off",
+    "unicorn/no-null": "off",
+    "unicorn/prevent-abbreviations": "off"
+  }
+}

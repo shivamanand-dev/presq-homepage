@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Users, Target, Award, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -7,19 +7,19 @@ export default function AboutSection() {
   const highlights = [
     {
       icon: Users,
-      title: "Expert Team",
-      description: "Passionate developers & designers"
+      title: 'Expert Team',
+      description: 'Passionate developers & designers',
     },
     {
       icon: Target,
-      title: "Results Driven",
-      description: "Focused on your success"
+      title: 'Results Driven',
+      description: 'Focused on your success',
     },
     {
       icon: Award,
-      title: "Quality First",
-      description: "Premium solutions delivered"
-    }
+      title: 'Quality First',
+      description: 'Premium solutions delivered',
+    },
   ];
 
   return (
@@ -33,7 +33,6 @@ export default function AboutSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
           {/* Left Side - Content */}
           <div className="space-y-8">
             {/* Badge */}
@@ -57,7 +56,9 @@ export default function AboutSection() {
 
             {/* Description */}
             <p className="text-xl text-gray-600 leading-relaxed">
-              We are a passionate team of web development experts dedicated to transforming your digital presence. Our mission is to create stunning, user-friendly solutions that drive results and elevate your brand.
+              We are a passionate team of web development experts dedicated to transforming your
+              digital presence. Our mission is to create stunning, user-friendly solutions that
+              drive results and elevate your brand.
             </p>
 
             {/* Highlights Grid */}
@@ -96,45 +97,56 @@ export default function AboutSection() {
             <div className="relative flex items-center justify-center">
               <div className="w-80 h-80 relative">
                 {/* Outer Ring */}
-                <div className="absolute inset-0 rounded-full border-4 border-blue-200/40 animate-spin" style={{ animationDuration: '30s' }}>
+                <div
+                  className="absolute inset-0 rounded-full border-4 border-blue-200/40 animate-spin"
+                  style={{ animationDuration: '30s' }}
+                >
                   {/* Inner Ring */}
-                  <div className="absolute inset-8 rounded-full border-4 border-purple-200/40 animate-spin" style={{ animationDuration: '20s', animationDirection: 'reverse' }}>
+                  <div
+                    className="absolute inset-8 rounded-full border-4 border-purple-200/40 animate-spin"
+                    style={{ animationDuration: '20s', animationDirection: 'reverse' }}
+                  >
                     {/* Core */}
                     <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 border-4 border-white shadow-2xl flex items-center justify-center">
                       <div className="text-center">
-                         <svg className="w-full h-full" viewBox="0 0 320 320">
-                      <defs>
-                        <path
-                          id="outer-circle"
-                          d="M 160,160 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"
-                        />
-                      </defs>
-                      <text className="fill-gray-800 text-lg font-bold tracking-wider" style={{ fontSize: '16px' }}>
-                        <textPath href="#outer-circle" startOffset="0%">
-                          PRESQ INNOVATION • DIGITAL SOLUTIONS • WEB DEVELOPMENT • 
-                        </textPath>
-                      </text>
-                    </svg>
+                        <svg className="w-full h-full" viewBox="0 0 320 320">
+                          <defs>
+                            <path
+                              id="outer-circle"
+                              d="M 160,160 m -130,0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0"
+                            />
+                          </defs>
+                          <text
+                            className="fill-gray-800 text-lg font-bold tracking-wider"
+                            style={{ fontSize: '16px' }}
+                          >
+                            <textPath href="#outer-circle" startOffset="0%">
+                              PRESQ INNOVATION • DIGITAL SOLUTIONS • WEB DEVELOPMENT •
+                            </textPath>
+                          </text>
+                        </svg>
 
-                    <div className="absolute inset-8 rounded-full border-4 border-purple-500/30 bg-none animate-spin" style={{ animationDuration: '40s', animationDirection: 'reverse' }}>
-                    
-                    {/* Inner Text Ring - Services */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg className="w-full h-full" viewBox="0 0 200 200">
-                        <defs>
-                          <path
-                            id="inner-circle"
-                            d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
-                          />
-                        </defs>
-                        <text className="fill-gray-500 text-base font-semibold tracking-wide">
-                          <textPath href="#inner-circle" startOffset="0%">
-                            MOBILE APPS • SEO • MARKETING • DESIGN • 
-                          </textPath>
-                        </text>
-                      </svg>
-                    </div>
-                  </div>
+                        <div
+                          className="absolute inset-8 rounded-full border-4 border-purple-500/30 bg-none animate-spin"
+                          style={{ animationDuration: '40s', animationDirection: 'reverse' }}
+                        >
+                          {/* Inner Text Ring - Services */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <svg className="w-full h-full" viewBox="0 0 200 200">
+                              <defs>
+                                <path
+                                  id="inner-circle"
+                                  d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
+                                />
+                              </defs>
+                              <text className="fill-gray-500 text-base font-semibold tracking-wide">
+                                <textPath href="#inner-circle" startOffset="0%">
+                                  MOBILE APPS • SEO • MARKETING • DESIGN •
+                                </textPath>
+                              </text>
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -144,12 +156,18 @@ export default function AboutSection() {
                 <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center animate-float">
                   <Users className="w-8 h-8 text-blue-600" />
                 </div>
-                
-                <div className="absolute bottom-4 left-4 w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
+
+                <div
+                  className="absolute bottom-4 left-4 w-14 h-14 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center animate-float"
+                  style={{ animationDelay: '1s' }}
+                >
                   <Target className="w-7 h-7 text-purple-600" />
                 </div>
-                
-                <div className="absolute top-1/2 right-0 w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
+
+                <div
+                  className="absolute top-1/2 right-0 w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center animate-float"
+                  style={{ animationDelay: '2s' }}
+                >
                   <Award className="w-6 h-6 text-green-600" />
                 </div>
               </div>
@@ -160,7 +178,7 @@ export default function AboutSection() {
               <div className="text-2xl font-bold text-blue-600">100+</div>
               <div className="text-sm text-gray-600">Projects Delivered</div>
             </div>
-            
+
             <div className="absolute -top-8 -right-8 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl p-4 shadow-lg">
               <div className="text-2xl font-bold text-purple-600">50+</div>
               <div className="text-sm text-gray-600">Happy Clients</div>
