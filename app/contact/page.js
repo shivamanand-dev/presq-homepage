@@ -1,7 +1,20 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle, AlertCircle, User, Building, MessageSquare, Calendar } from 'lucide-react';
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Send,
+  CheckCircle,
+  AlertCircle,
+  User,
+  Building,
+  MessageSquare,
+  Calendar,
+} from 'lucide-react';
+import { saveContactSubmission } from '@/lib/contactService';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -15,12 +28,13 @@ export default function Contact() {
     message: '',
     contactMethod: 'email',
     bestTime: '',
-    gdprConsent: false
+    gdprConsent: false,
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [submitMessage, setSubmitMessage] = useState('');
 
   // Country codes for phone validation
   const countryCodes = [
@@ -29,7 +43,7 @@ export default function Contact() {
     { code: '+44', country: 'UK' },
     { code: '+61', country: 'Australia' },
     { code: '+49', country: 'Germany' },
-    { code: '+33', country: 'France' }
+    { code: '+33', country: 'France' },
   ];
 
   // Subject options
@@ -42,7 +56,7 @@ export default function Contact() {
     'Website Maintenance',
     'General Inquiry',
     'Partnership Opportunity',
-    'Other'
+    'Other',
   ];
 
   // Best time options
@@ -50,16 +64,16 @@ export default function Contact() {
     'Morning (9 AM - 12 PM)',
     'Afternoon (12 PM - 5 PM)',
     'Evening (5 PM - 8 PM)',
-    'Anytime'
+    'Anytime',
   ];
 
   // Validation functions
-  const validateEmail = (email) => {
+  const validateEmail = email => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const validatePhone = (phone) => {
+  const validatePhone = phone => {
     const phoneRegex = /^[0-9]{10,15}$/;
     return phoneRegex.test(phone.replace(/\s+/g, ''));
   };
@@ -74,7 +88,7 @@ export default function Contact() {
       subject: formData.subject,
       message: formData.message.trim() && formData.message.trim().length >= 10,
       bestTime: formData.bestTime,
-      gdprConsent: formData.gdprConsent
+      gdprConsent: formData.gdprConsent,
     };
 
     return Object.values(requiredFields).every(field => field);
@@ -98,49 +112,53 @@ export default function Contact() {
     }
     if (!formData.subject) newErrors.subject = 'Please select a subject';
     if (!formData.message.trim()) newErrors.message = 'Message is required';
-    if (formData.message.trim().length < 10) newErrors.message = 'Message must be at least 10 characters long';
+    if (formData.message.trim().length < 10)
+      newErrors.message = 'Message must be at least 10 characters long';
     if (!formData.bestTime) newErrors.bestTime = 'Please select your preferred contact time';
-    if (!formData.gdprConsent) newErrors.gdprConsent = 'You must agree to the privacy policy to continue';
+    if (!formData.gdprConsent)
+      newErrors.gdprConsent = 'You must agree to the privacy policy to continue';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setSubmitMessage('');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate success/error randomly for demo
-      const isSuccess = Math.random() > 0.2; // 80% success rate
-      
-      if (isSuccess) {
+      console.log('📤 Submitting contact form...');
+
+      // Save to Firebase
+      const result = await saveContactSubmission(formData);
+
+      if (result.success) {
         setSubmitStatus('success');
+        setSubmitMessage(result.message);
+
         // Reset form on success
         setFormData({
           firstName: '',
@@ -153,13 +171,19 @@ export default function Contact() {
           message: '',
           contactMethod: 'email',
           bestTime: '',
-          gdprConsent: false
+          gdprConsent: false,
         });
+
+        console.log('✅ Contact form submitted successfully:', result.data);
       } else {
         setSubmitStatus('error');
+        setSubmitMessage(result.message || 'Failed to send message. Please try again.');
+        console.error('❌ Contact form submission failed:', result);
       }
     } catch (error) {
+      console.error('❌ Unexpected error during form submission:', error);
       setSubmitStatus('error');
+      setSubmitMessage('An unexpected error occurred. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -180,16 +204,17 @@ export default function Contact() {
               <MessageSquare className="w-4 h-4 mr-2" />
               Get In Touch
             </div>
-            
+
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              <span className="text-gray-900">Let's Start Your</span>{' '}
+              <span className="text-gray-900">Let&apos;s Start Your</span>{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Digital Journey
               </span>
             </h1>
-            
+
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Ready to transform your business? Get in touch with our expert team and let's discuss how we can help you achieve your digital goals.
+              Ready to transform your business? Get in touch with our expert team and let&apos;s
+              discuss how we can help you achieve your digital goals.
             </p>
           </div>
         </div>
@@ -199,13 +224,10 @@ export default function Contact() {
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12">
-            
             {/* Contact Information */}
             <div className="lg:col-span-1 space-y-8">
-              
               {/* Contact Cards */}
               <div className="space-y-6">
-                
                 {/* Phone Contact */}
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 border border-gray-100">
                   <div className="flex items-start space-x-4">
@@ -215,8 +237,8 @@ export default function Contact() {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Call Us</h3>
                       <p className="text-gray-600 mb-3">Speak directly with our team</p>
-                      <a 
-                        href="tel:+918448334698" 
+                      <a
+                        href="tel:+918448334698"
                         className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
                         aria-label="Call PreSQ Innovation"
                       >
@@ -235,8 +257,8 @@ export default function Contact() {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Email Us</h3>
                       <p className="text-gray-600 mb-3">Send us a detailed message</p>
-                      <a 
-                        href="mailto:admin@presq.co.in" 
+                      <a
+                        href="mailto:admin@presq.co.in"
                         className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200"
                         aria-label="Email PreSQ Innovation"
                       >
@@ -271,7 +293,8 @@ export default function Contact() {
                   <h3 className="text-lg font-semibold">Quick Response Guarantee</h3>
                 </div>
                 <p className="text-blue-100 leading-relaxed">
-                  We respond to all inquiries within 24 hours during business days. For urgent matters, call us directly.
+                  We respond to all inquiries within 24 hours during business days. For urgent
+                  matters, call us directly.
                 </p>
               </div>
             </div>
@@ -284,39 +307,54 @@ export default function Contact() {
                     Send Us a Message
                   </h2>
                   <p className="text-gray-600">
-                    Fill out the form below and we'll get back to you as soon as possible.
+                    Fill out the form below and we&apos;ll get back to you as soon as possible.
                   </p>
                 </div>
 
                 {/* Success Message */}
                 {submitStatus === 'success' && (
-                  <div className="mb-8 p-4 bg-green-50 border border-green-200 rounded-xl flex items-start space-x-3" role="alert" aria-live="polite">
+                  <div
+                    className="mb-8 p-4 bg-green-50 border border-green-200 rounded-xl flex items-start space-x-3"
+                    role="alert"
+                    aria-live="polite"
+                  >
                     <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="text-green-800 font-semibold mb-1">Message Sent Successfully!</h3>
-                      <p className="text-green-700 text-sm">Thank you for contacting us. We'll respond within 24 hours.</p>
+                      <h3 className="text-green-800 font-semibold mb-1">
+                        Message Sent Successfully!
+                      </h3>
+                      <p className="text-green-700 text-sm">{submitMessage}</p>
                     </div>
                   </div>
                 )}
 
                 {/* Error Message */}
                 {submitStatus === 'error' && (
-                  <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3" role="alert" aria-live="polite">
+                  <div
+                    className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3"
+                    role="alert"
+                    aria-live="polite"
+                  >
                     <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="text-red-800 font-semibold mb-1">Message Failed to Send</h3>
-                      <p className="text-red-700 text-sm">Please try again or contact us directly via phone or email.</p>
+                      <p className="text-red-700 text-sm">{submitMessage}</p>
                     </div>
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                  
                   {/* Name Fields */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name <span className="text-red-500" aria-label="required">*</span>
+                      <label
+                        htmlFor="firstName"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        First Name{' '}
+                        <span className="text-red-500" aria-label="required">
+                          *
+                        </span>
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -327,13 +365,13 @@ export default function Contact() {
                           value={formData.firstName}
                           onChange={handleInputChange}
                           className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                            errors.firstName 
-                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                            errors.firstName
+                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                               : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                           }`}
                           placeholder="Enter your first name"
-                          aria-describedby={errors.firstName ? "firstName-error" : undefined}
-                          aria-invalid={errors.firstName ? "true" : "false"}
+                          aria-describedby={errors.firstName ? 'firstName-error' : undefined}
+                          aria-invalid={errors.firstName ? 'true' : 'false'}
                         />
                       </div>
                       {errors.firstName && (
@@ -344,8 +382,14 @@ export default function Contact() {
                     </div>
 
                     <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name <span className="text-red-500" aria-label="required">*</span>
+                      <label
+                        htmlFor="lastName"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Last Name{' '}
+                        <span className="text-red-500" aria-label="required">
+                          *
+                        </span>
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -356,13 +400,13 @@ export default function Contact() {
                           value={formData.lastName}
                           onChange={handleInputChange}
                           className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                            errors.lastName 
-                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                            errors.lastName
+                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                               : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                           }`}
                           placeholder="Enter your last name"
-                          aria-describedby={errors.lastName ? "lastName-error" : undefined}
-                          aria-invalid={errors.lastName ? "true" : "false"}
+                          aria-describedby={errors.lastName ? 'lastName-error' : undefined}
+                          aria-invalid={errors.lastName ? 'true' : 'false'}
                         />
                       </div>
                       {errors.lastName && (
@@ -376,7 +420,10 @@ export default function Contact() {
                   {/* Email Field */}
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address <span className="text-red-500" aria-label="required">*</span>
+                      Email Address{' '}
+                      <span className="text-red-500" aria-label="required">
+                        *
+                      </span>
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -387,13 +434,13 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleInputChange}
                         className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                          errors.email 
-                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                          errors.email
+                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                             : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                         }`}
                         placeholder="Enter your email address"
-                        aria-describedby={errors.email ? "email-error" : undefined}
-                        aria-invalid={errors.email ? "true" : "false"}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                        aria-invalid={errors.email ? 'true' : 'false'}
                       />
                     </div>
                     {errors.email && (
@@ -406,7 +453,10 @@ export default function Contact() {
                   {/* Phone Field */}
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number <span className="text-red-500" aria-label="required">*</span>
+                      Phone Number{' '}
+                      <span className="text-red-500" aria-label="required">
+                        *
+                      </span>
                     </label>
                     <div className="flex space-x-3">
                       <select
@@ -416,7 +466,7 @@ export default function Contact() {
                         className="px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
                         aria-label="Country code"
                       >
-                        {countryCodes.map((country) => (
+                        {countryCodes.map(country => (
                           <option key={country.code} value={country.code}>
                             {country.code} ({country.country})
                           </option>
@@ -431,13 +481,13 @@ export default function Contact() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 ${
-                            errors.phone 
-                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                            errors.phone
+                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                               : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                           }`}
                           placeholder="Enter your phone number"
-                          aria-describedby={errors.phone ? "phone-error" : undefined}
-                          aria-invalid={errors.phone ? "true" : "false"}
+                          aria-describedby={errors.phone ? 'phone-error' : undefined}
+                          aria-invalid={errors.phone ? 'true' : 'false'}
                         />
                       </div>
                     </div>
@@ -450,7 +500,10 @@ export default function Contact() {
 
                   {/* Company Field */}
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Company Name <span className="text-gray-400">(Optional)</span>
                     </label>
                     <div className="relative">
@@ -469,8 +522,14 @@ export default function Contact() {
 
                   {/* Subject Field */}
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject/Topic of Inquiry <span className="text-red-500" aria-label="required">*</span>
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Subject/Topic of Inquiry{' '}
+                      <span className="text-red-500" aria-label="required">
+                        *
+                      </span>
                     </label>
                     <select
                       id="subject"
@@ -478,15 +537,15 @@ export default function Contact() {
                       value={formData.subject}
                       onChange={handleInputChange}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 bg-white ${
-                        errors.subject 
-                          ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                        errors.subject
+                          ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                           : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                       }`}
-                      aria-describedby={errors.subject ? "subject-error" : undefined}
-                      aria-invalid={errors.subject ? "true" : "false"}
+                      aria-describedby={errors.subject ? 'subject-error' : undefined}
+                      aria-invalid={errors.subject ? 'true' : 'false'}
                     >
                       <option value="">Select a subject</option>
-                      {subjectOptions.map((option) => (
+                      {subjectOptions.map(option => (
                         <option key={option} value={option}>
                           {option}
                         </option>
@@ -501,8 +560,14 @@ export default function Contact() {
 
                   {/* Message Field */}
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Detailed Message <span className="text-red-500" aria-label="required">*</span>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Detailed Message{' '}
+                      <span className="text-red-500" aria-label="required">
+                        *
+                      </span>
                     </label>
                     <textarea
                       id="message"
@@ -511,13 +576,13 @@ export default function Contact() {
                       onChange={handleInputChange}
                       rows={6}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 resize-vertical ${
-                        errors.message 
-                          ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                        errors.message
+                          ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                           : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                       }`}
                       placeholder="Please provide details about your project, requirements, timeline, and any specific questions you have..."
-                      aria-describedby={errors.message ? "message-error" : undefined}
-                      aria-invalid={errors.message ? "true" : "false"}
+                      aria-describedby={errors.message ? 'message-error' : undefined}
+                      aria-invalid={errors.message ? 'true' : 'false'}
                     />
                     <div className="mt-1 text-sm text-gray-500">
                       {formData.message.length}/500 characters
@@ -531,11 +596,13 @@ export default function Contact() {
 
                   {/* Contact Preferences */}
                   <div className="grid md:grid-cols-2 gap-6">
-                    
                     {/* Preferred Contact Method */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-3">
-                        Preferred Contact Method <span className="text-red-500" aria-label="required">*</span>
+                        Preferred Contact Method{' '}
+                        <span className="text-red-500" aria-label="required">
+                          *
+                        </span>
                       </label>
                       <div className="space-y-3">
                         <label className="flex items-center">
@@ -565,8 +632,14 @@ export default function Contact() {
 
                     {/* Best Time to Contact */}
                     <div>
-                      <label htmlFor="bestTime" className="block text-sm font-medium text-gray-700 mb-2">
-                        Best Time to Contact <span className="text-red-500" aria-label="required">*</span>
+                      <label
+                        htmlFor="bestTime"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Best Time to Contact{' '}
+                        <span className="text-red-500" aria-label="required">
+                          *
+                        </span>
                       </label>
                       <div className="relative">
                         <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -576,15 +649,15 @@ export default function Contact() {
                           value={formData.bestTime}
                           onChange={handleInputChange}
                           className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-colors duration-200 bg-white ${
-                            errors.bestTime 
-                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
+                            errors.bestTime
+                              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                               : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
                           }`}
-                          aria-describedby={errors.bestTime ? "bestTime-error" : undefined}
-                          aria-invalid={errors.bestTime ? "true" : "false"}
+                          aria-describedby={errors.bestTime ? 'bestTime-error' : undefined}
+                          aria-invalid={errors.bestTime ? 'true' : 'false'}
                         >
                           <option value="">Select best time</option>
-                          {timeOptions.map((option) => (
+                          {timeOptions.map(option => (
                             <option key={option} value={option}>
                               {option}
                             </option>
@@ -610,15 +683,19 @@ export default function Contact() {
                         className={`w-5 h-5 text-blue-600 border-2 rounded focus:ring-blue-500 mt-0.5 ${
                           errors.gdprConsent ? 'border-red-300' : 'border-gray-300'
                         }`}
-                        aria-describedby={errors.gdprConsent ? "gdpr-error" : undefined}
-                        aria-invalid={errors.gdprConsent ? "true" : "false"}
+                        aria-describedby={errors.gdprConsent ? 'gdpr-error' : undefined}
+                        aria-invalid={errors.gdprConsent ? 'true' : 'false'}
                       />
                       <span className="text-sm text-gray-700 leading-relaxed">
                         I agree to the{' '}
                         <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline">
                           Privacy Policy
                         </a>{' '}
-                        and consent to PreSQ Innovation storing and processing my personal data for the purpose of responding to my inquiry. <span className="text-red-500" aria-label="required">*</span>
+                        and consent to PreSQ Innovation storing and processing my personal data for
+                        the purpose of responding to my inquiry.{' '}
+                        <span className="text-red-500" aria-label="required">
+                          *
+                        </span>
                       </span>
                     </label>
                     {errors.gdprConsent && (
@@ -652,11 +729,13 @@ export default function Contact() {
                         </>
                       )}
                     </button>
-                    <p id="submit-button-description" className="mt-2 text-sm text-gray-500 text-center">
-                      {!isFormValid() 
+                    <p
+                      id="submit-button-description"
+                      className="mt-2 text-sm text-gray-500 text-center"
+                    >
+                      {!isFormValid()
                         ? 'Please fill in all required fields to send your message'
-                        : 'We\'ll respond within 24 hours during business days'
-                      }
+                        : "We'll respond within 24 hours during business days"}
                     </p>
                   </div>
                 </form>
