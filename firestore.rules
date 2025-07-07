@@ -39,8 +39,8 @@ service cloud.firestore {
       return isSuperAdmin() || (isProjectAdmin() && getUserCompanyId() == companyId);
     }
     
-    function isValidTimestamp(timestamp) {
-      return timestamp is timestamp;
+    function isValidTimestamp(value) {
+      return value is timestamp;
     }
     
     function hasRequiredFields(data, requiredFields) {
