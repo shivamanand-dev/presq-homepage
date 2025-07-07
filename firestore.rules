@@ -1,55 +1,411 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Root collection access for PreSQ Innovation
+    
+    // Helper functions for authentication and authorization
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isSuperAdmin() {
+      return isAuthenticated() && getUserData().privilege == 'super_admin';
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && getUserData().privilege in ['admin', 'super_admin'];
+    }
+    
+    function isProjectAdmin() {
+      return isAuthenticated() && getUserData().privilege in ['project_admin', 'admin', 'super_admin'];
+    }
+    
+    function isEditor() {
+      return isAuthenticated() && getUserData().privilege in ['editor', 'project_admin', 'admin', 'super_admin'];
+    }
+    
+    function getUserCompanyId() {
+      return getUserData().companyId;
+    }
+    
+    function belongsToUserCompany(companyId) {
+      return isSuperAdmin() || getUserCompanyId() == companyId;
+    }
+    
+    function canManageCompanyData(companyId) {
+      return isSuperAdmin() || (isProjectAdmin() && getUserCompanyId() == companyId);
+    }
+    
+    function isValidTimestamp(timestamp) {
+      return timestamp is timestamp;
+    }
+    
+    function hasRequiredFields(data, requiredFields) {
+      return requiredFields.toSet().difference(data.keys().toSet()).size() == 0;
+    }
+    
+    // Users collection - Root level
+    match /users/{userId} {
+      // Users can read their own data
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      
+      // Super admins can read all users
+      allow read: if isSuperAdmin();
+      
+      // Project admins can read users in their company
+      allow read: if isProjectAdmin() && belongsToUserCompany(resource.data.companyId);
+      
+      // Users can update their own profile (except privilege and companyId)
+      allow update: if isAuthenticated() && 
+        request.auth.uid == userId && 
+        !('privilege' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys());
+      
+      // Super admins can update any user
+      allow update: if isSuperAdmin();
+      
+      // Project admins can update users in their company (except privilege changes to admin levels)
+      allow update: if isProjectAdmin() && 
+        belongsToUserCompany(resource.data.companyId) &&
+        (!('privilege' in request.resource.data.diff(resource.data).affectedKeys()) ||
+         request.resource.data.privilege == 'editor');
+      
+      // Only super admins can create users (during signup process)
+      allow create: if isSuperAdmin() || 
+        (isAuthenticated() && request.auth.uid == userId && 
+         request.resource.data.privilege == 'editor');
+      
+      // Only super admins can delete users
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Companies collection - Root level (Super admin only)
+    match /companies/{companyId} {
+      // Only super admins can manage companies
+      allow read, write: if isSuperAdmin();
+    }
+    
+    // User sessions collection
+    match /user_sessions/{sessionId} {
+      // Users can read their own sessions
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Super admins can read all sessions
+      allow read: if isSuperAdmin();
+      
+      // Users can create their own sessions
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      
+      // Users can update their own sessions
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Sessions auto-expire, no manual deletion needed except by super admin
+      allow delete: if isSuperAdmin();
+    }
+    
+    // User preferences collection
+    match /user_preferences/{userId} {
+      // Users can manage their own preferences
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+      
+      // Super admins can read all preferences
+      allow read: if isSuperAdmin();
+    }
+    
+    // Main Presq collection and subcollections
     match /Presq/{document=**} {
+      // Deny all access by default - specific rules below will override
+      allow read, write: if false;
+    }
+    
+    // Contact Submissions
+    match /Presq/contact_submissions/{submissionId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
       
-      // Contact submissions - Simplified structure
-      match /contact_submissions/{submissionId} {
-        // Public can write (contact forms)
-        allow create: if true && 
-          request.resource.data.companyId is string &&
-          request.resource.data.source is string &&
-          request.resource.data.status is string &&
-          request.resource.data.fullName is string &&
-          request.resource.data.email is string &&
-          request.resource.data.message is string;
-        
-        // Only authenticated admins can read/update
-        allow read, update: if request.auth != null && 
-          request.auth.token.admin == true;
-        
-        // No delete operations allowed
-        allow delete: if false;
-      }
+      // Create permissions - must include valid companyId and required fields
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'source', 'status', 'fullName', 'email', 'message']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.source in ['website', 'mobile_app', 'admin_panel', 'landing_pages'] &&
+        request.resource.data.status in ['new', 'in_progress', 'completed', 'closed'] &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
       
-      // Analytics - Simplified structure
-      match /analytics/{eventId} {
-        // Public can write (analytics tracking)
-        allow create: if true;
-        
-        // Only authenticated admins can read
-        allow read: if request.auth != null && 
-          request.auth.token.admin == true;
-        
-        // No update/delete operations
-        allow update, delete: if false;
-      }
+      // Update permissions - can only update certain fields
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        // Cannot change companyId or createdAt
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        // Must update updatedAt timestamp
+        isValidTimestamp(request.resource.data.updatedAt) &&
+        // Status must be valid if being updated
+        (!('status' in request.resource.data.diff(resource.data).affectedKeys()) ||
+         request.resource.data.status in ['new', 'in_progress', 'completed', 'closed']);
       
-      // System logs - Simplified structure
-      match /system_logs/{logId} {
-        // System can write (error logging)
-        allow create: if true;
-        
-        // Only authenticated admins can read
-        allow read: if request.auth != null && 
-          request.auth.token.admin == true;
-        
-        // No update/delete operations
-        allow update, delete: if false;
-      }
+      // Delete permissions - only super admins and project admins of the company
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // Website Analytics
+    match /Presq/analytics/website_analytics/{analyticsId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
       
-      // Default deny all other operations
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'eventType', 'pageUrl', 'sessionId']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.eventType in ['page_view', 'click', 'form_submission', 'scroll', 'download', 'video_play'] &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions - limited updates allowed
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // App Analytics
+    match /Presq/analytics/app_analytics/{analyticsId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'eventType', 'appVersion', 'platform', 'sessionId']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.platform in ['iOS', 'Android', 'Web'] &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // Performance Metrics
+    match /Presq/analytics/performance_metrics/{metricId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'metricType', 'value', 'unit']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.metricType in ['page_load_time', 'api_response_time', 'database_query_time', 'memory_usage', 'cpu_usage'] &&
+        request.resource.data.value is number &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // Conversion Tracking
+    match /Presq/analytics/conversion_tracking/{conversionId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'conversionType', 'value', 'currency', 'sessionId']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.value is number &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // User Journey
+    match /Presq/analytics/user_journey/{journeyId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'journeyStep', 'sessionId', 'stepOrder']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.stepOrder is number &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions
+      allow delete: if isAuthenticated() && 
+        (isSuperAdmin() || canManageCompanyData(resource.data.companyId));
+    }
+    
+    // Error Logs
+    match /Presq/system_logs/error_logs/{logId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'level', 'message', 'source']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.level in ['error', 'warning', 'info'] &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions - logs are typically immutable, but allow updates for resolution status
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions - only super admins for data retention
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Activity Logs
+    match /Presq/system_logs/activity_logs/{logId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'action', 'userId', 'resource']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions - activity logs are typically immutable
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions - only super admins for data retention
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Security Logs
+    match /Presq/system_logs/security_logs/{logId} {
+      // Read permissions - more restrictive for security logs
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        (isProjectAdmin() && belongsToUserCompany(resource.data.companyId))
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'eventType', 'severity', 'source']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.eventType in ['failed_login', 'suspicious_activity', 'permission_denied', 'data_breach_attempt'] &&
+        request.resource.data.severity in ['low', 'medium', 'high', 'critical'] &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions - security logs should be immutable except for investigation status
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || (isProjectAdmin() && belongsToUserCompany(resource.data.companyId))) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions - only super admins
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Performance Logs
+    match /Presq/system_logs/performance_logs/{logId} {
+      // Read permissions
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        belongsToUserCompany(resource.data.companyId)
+      );
+      
+      // Create permissions
+      allow create: if isAuthenticated() && 
+        hasRequiredFields(request.resource.data, ['companyId', 'component', 'metric', 'value']) &&
+        (isSuperAdmin() || belongsToUserCompany(request.resource.data.companyId)) &&
+        request.resource.data.value is number &&
+        isValidTimestamp(request.resource.data.createdAt) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Update permissions
+      allow update: if isAuthenticated() && 
+        (isSuperAdmin() || belongsToUserCompany(resource.data.companyId)) &&
+        !('companyId' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        !('createdAt' in request.resource.data.diff(resource.data).affectedKeys()) &&
+        isValidTimestamp(request.resource.data.updatedAt);
+      
+      // Delete permissions - only super admins for data retention
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Catch-all rule for any other documents - deny by default
+    match /{document=**} {
       allow read, write: if false;
     }
   }
