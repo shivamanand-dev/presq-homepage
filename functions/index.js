@@ -28,10 +28,6 @@ const createEmailTransporter = () => {
       user: process.env.EMAIL_USER || '',
       pass: process.env.EMAIL_PASSWORD || '', // Zoho email password
     },
-    tls: {
-      ciphers: 'SSLv3',
-      rejectUnauthorized: false,
-    },
   };
 
   return nodemailer.createTransporter(emailConfig);

@@ -1,0 +1,189 @@
+[debug] [2025-07-07T08:42:56.846Z] ----------------------------------------------------------------------
+[debug] [2025-07-07T08:42:56.848Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\shiva\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2025-07-07T08:42:56.848Z] CLI Version:   14.9.0
+[debug] [2025-07-07T08:42:56.848Z] Platform:      win32
+[debug] [2025-07-07T08:42:56.848Z] Node Version:  v22.13.0
+[debug] [2025-07-07T08:42:56.848Z] Time:          Mon Jul 07 2025 14:12:56 GMT+0530 (India Standard Time)
+[debug] [2025-07-07T08:42:56.848Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-07-07T08:42:57.000Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-07-07T08:42:57.001Z] > authorizing via signed-in user (anandvipul01@gmail.com)
+[debug] [2025-07-07T08:42:57.001Z] [iam] checking project presq-caf07 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-07-07T08:42:57.002Z] Checked if tokens are valid: false, expires at: 1751873747032
+[debug] [2025-07-07T08:42:57.002Z] Checked if tokens are valid: false, expires at: 1751873747032
+[debug] [2025-07-07T08:42:57.002Z] > refreshing access token with scopes: []
+[debug] [2025-07-07T08:42:57.003Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-07-07T08:42:57.003Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-07-07T08:42:57.161Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-07-07T08:42:57.161Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-07-07T08:42:57.166Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions [none]
+[debug] [2025-07-07T08:42:57.166Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions x-goog-quota-user=projects/presq-caf07
+[debug] [2025-07-07T08:42:57.166Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-07-07T08:42:58.583Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions 200
+[debug] [2025-07-07T08:42:58.583Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-07-07T08:42:58.583Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:42:58.583Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:42:58.583Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/presq-caf07/serviceAccounts/presq-caf07@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-07-07T08:42:58.583Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/presq-caf07/serviceAccounts/presq-caf07@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-07-07T08:43:00.319Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/presq-caf07/serviceAccounts/presq-caf07@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-07-07T08:43:00.320Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/presq-caf07/serviceAccounts/presq-caf07@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'presq-caf07'...
+[info] 
+[info] i  deploying functions 
+[debug] [2025-07-07T08:43:00.323Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:00.323Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:00.323Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 [none]
+[debug] [2025-07-07T08:43:00.645Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 200
+[debug] [2025-07-07T08:43:00.645Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 {"projectNumber":"11882363024","projectId":"presq-caf07","lifecycleState":"ACTIVE","name":"presq","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-07-03T19:19:02.947467Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-07-07T08:43:00.651Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:00.651Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:00.651Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/presq-caf07/adminSdkConfig [none]
+[debug] [2025-07-07T08:43:01.029Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/presq-caf07/adminSdkConfig 200
+[debug] [2025-07-07T08:43:01.030Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/presq-caf07/adminSdkConfig {"projectId":"presq-caf07","storageBucket":"presq-caf07.firebasestorage.app"}
+[debug] [2025-07-07T08:43:01.030Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.030Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.030Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs [none]
+[debug] [2025-07-07T08:43:01.371Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs 200
+[debug] [2025-07-07T08:43:01.371Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs {"configs":[{"name":"projects/presq-caf07/configs/email"}]}
+[debug] [2025-07-07T08:43:01.371Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.371Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.371Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables [none]
+[debug] [2025-07-07T08:43:01.706Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables 200
+[debug] [2025-07-07T08:43:01.706Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables {"variables":[{"name":"projects/presq-caf07/configs/email/variables/admin_email","updateTime":"2025-07-07T07:01:04.965411044Z"},{"name":"projects/presq-caf07/configs/email/variables/host","updateTime":"2025-07-07T07:00:06.428086632Z"},{"name":"projects/presq-caf07/configs/email/variables/password","updateTime":"2025-07-07T07:00:49.227898944Z"},{"name":"projects/presq-caf07/configs/email/variables/port","updateTime":"2025-07-07T07:00:17.785454911Z"},{"name":"projects/presq-caf07/configs/email/variables/secure","updateTime":"2025-07-07T06:36:24.608862763Z"},{"name":"projects/presq-caf07/configs/email/variables/service","updateTime":"2025-07-07T06:59:40.870307055Z"},{"name":"projects/presq-caf07/configs/email/variables/user","updateTime":"2025-07-07T07:00:28.423062371Z"}]}
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.706Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:01.707Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/admin_email [none]
+[debug] [2025-07-07T08:43:01.707Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/host [none]
+[debug] [2025-07-07T08:43:01.708Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/password [none]
+[debug] [2025-07-07T08:43:01.709Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/port [none]
+[debug] [2025-07-07T08:43:01.710Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/secure [none]
+[debug] [2025-07-07T08:43:01.711Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/service [none]
+[debug] [2025-07-07T08:43:01.712Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/user [none]
+[debug] [2025-07-07T08:43:02.095Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/password 200
+[debug] [2025-07-07T08:43:02.095Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/password {"name":"projects/presq-caf07/configs/email/variables/password","updateTime":"2025-07-07T07:00:49.227898944Z","text":"Kjjv@nxtn8UN45W"}
+[debug] [2025-07-07T08:43:02.115Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/host 200
+[debug] [2025-07-07T08:43:02.115Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/host {"name":"projects/presq-caf07/configs/email/variables/host","updateTime":"2025-07-07T07:00:06.428086632Z","text":"smtppro.zoho.in"}
+[debug] [2025-07-07T08:43:02.121Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/secure 200
+[debug] [2025-07-07T08:43:02.121Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/secure {"name":"projects/presq-caf07/configs/email/variables/secure","updateTime":"2025-07-07T06:36:24.608862763Z","text":"true"}
+[debug] [2025-07-07T08:43:02.122Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/user 200
+[debug] [2025-07-07T08:43:02.123Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/user {"name":"projects/presq-caf07/configs/email/variables/user","updateTime":"2025-07-07T07:00:28.423062371Z","text":"info@presq.co.in"}
+[debug] [2025-07-07T08:43:02.262Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/service 200
+[debug] [2025-07-07T08:43:02.262Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/service {"name":"projects/presq-caf07/configs/email/variables/service","updateTime":"2025-07-07T06:59:40.870307055Z","text":"zoho"}
+[debug] [2025-07-07T08:43:02.815Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/admin_email 200
+[debug] [2025-07-07T08:43:02.815Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/admin_email {"name":"projects/presq-caf07/configs/email/variables/admin_email","updateTime":"2025-07-07T07:01:04.965411044Z","text":"info@presq.co.in"}
+[debug] [2025-07-07T08:43:02.866Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/port 200
+[debug] [2025-07-07T08:43:02.866Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/presq-caf07/configs/email/variables/port {"name":"projects/presq-caf07/configs/email/variables/port","updateTime":"2025-07-07T07:00:17.785454911Z","text":"587"}
+[debug] [2025-07-07T08:43:02.867Z] Validating nodejs source
+[debug] [2025-07-07T08:43:03.425Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2025-07-07T08:43:03.425Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-07-07T08:43:03.426Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-07-07T08:43:03.430Z] Found firebase-functions binary at 'D:\ullulululull\presq\homepage\presq\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8066
+
+[debug] [2025-07-07T08:43:03.824Z] Got response from /__/functions.yaml {"endpoints":{"sendContactNotificationEmails":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","eventFilters":{"database":"(default)","namespace":"(default)"},"eventFilterPathPatterns":{"document":"Presq/contact_submissions/{platform}/{submissionId}"},"retry":false},"entryPoint":"sendContactNotificationEmails"},"resendContactEmails":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"resendContactEmails"},"emailSystemHealthCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"emailSystemHealthCheck"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-07-07T08:43:07.852Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-07-07T08:43:07.852Z] > authorizing via signed-in user (anandvipul01@gmail.com)
+[debug] [2025-07-07T08:43:07.852Z] [iam] checking project presq-caf07 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-07-07T08:43:07.852Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:07.852Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:07.852Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions [none]
+[debug] [2025-07-07T08:43:07.852Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions x-goog-quota-user=projects/presq-caf07
+[debug] [2025-07-07T08:43:07.852Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-07-07T08:43:09.317Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions 200
+[debug] [2025-07-07T08:43:09.317Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-07-07T08:43:09.317Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:09.317Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:09.318Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/presq-caf07/instances pageSize=100&pageToken=
+[debug] [2025-07-07T08:43:10.838Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/presq-caf07/instances 200
+[debug] [2025-07-07T08:43:10.839Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/presq-caf07/instances {}
+[info] i  functions: Loaded environment variables from .env. 
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged D:\ullulululull\presq\homepage\presq\functions (83.88 KB) for uploading 
+[debug] [2025-07-07T08:43:10.875Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:10.876Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:10.876Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/presq-caf07/locations/-/functions [none]
+[debug] [2025-07-07T08:43:11.638Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/presq-caf07/locations/-/functions 200
+[debug] [2025-07-07T08:43:11.639Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/presq-caf07/locations/-/functions {}
+[debug] [2025-07-07T08:43:11.639Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:11.639Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:11.640Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/presq-caf07/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-07-07T08:43:13.305Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/presq-caf07/locations/-/functions 200
+[debug] [2025-07-07T08:43:13.306Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/presq-caf07/locations/-/functions {"functions":[{"name":"projects/presq-caf07/locations/us-central1/functions/sendContactNotificationEmails","buildConfig":{"build":"projects/11882363024/locations/us-central1/builds/679be689-603a-4268-b69a-4741deb59cd9","runtime":"nodejs22","entryPoint":"sendContactNotificationEmails","source":{"storageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"sendContactNotificationEmails/function-source.zip","generation":"1751872568920353"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/presq-caf07/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"sendContactNotificationEmails/function-source.zip","generation":"1751872568920353"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/presq-caf07/serviceAccounts/11882363024-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/presq-caf07/locations/us-central1/services/sendcontactnotificationemails","timeoutSeconds":60,"environmentVariables":{"EMAIL_SERVICE":"zoho","EMAIL_HOST":"smtppro.zoho.in","EMAIL_PORT":"587","EMAIL_SECURE":"false","EMAIL_USER":"your-email@yourdomain.com","EMAIL_PASSWORD":"your-zoho-password","ADMIN_EMAIL":"info@presq.co.in","CC_EMAILS":"manager@presq.co.in,shivamanand252@gmail.com","COMPANY_NAME":"PreSQ Innovation","SUPPORT_EMAIL":"info@presq.co.in","WEBSITE_URL":"https://presq.co.in","ADMIN_PANEL_URL":"https://admin.presq.co.in","ALLOWED_ORIGINS":"https://presq.co.in,https://www.presq.co.in,https://admin.presq.co.in","NODE_ENV":"development","DEBUG":"true","FIREBASE_CONFIG":"{\"projectId\":\"presq-caf07\",\"storageBucket\":\"presq-caf07.firebasestorage.app\"}","GCLOUD_PROJECT":"presq-caf07","EVENTARC_CLOUD_EVENT_SOURCE":"projects/presq-caf07/locations/us-central1/services/sendContactNotificationEmails","FUNCTION_SIGNATURE_TYPE":"cloudevent","FUNCTION_TARGET":"sendContactNotificationEmails","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://sendcontactnotificationemails-slx5j55rda-uc.a.run.app","serviceAccountEmail":"11882363024-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"sendcontactnotificationemails-00001-ver","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"eventTrigger":{"trigger":"projects/presq-caf07/locations/nam5/triggers/sendcontactnotificationemails-236212","triggerRegion":"nam5","eventType":"google.cloud.firestore.document.v1.created","eventFilters":[{"attribute":"namespace","value":"(default)"},{"attribute":"document","value":"Presq/contact_submissions/{platform}/{submissionId}","operator":"match-path-pattern"},{"attribute":"database","value":"(default)"}],"pubsubTopic":"projects/presq-caf07/topics/eventarc-nam5-sendcontactnotificationemails-236212-405","serviceAccountEmail":"11882363024-compute@developer.gserviceaccount.com","retryPolicy":"RETRY_POLICY_DO_NOT_RETRY"},"state":"ACTIVE","updateTime":"2025-07-07T07:17:23.708824522Z","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"7c3ff693e0e96cbf81e8aeb8de1e4effedd2e610"},"environment":"GEN_2","url":"https://us-central1-presq-caf07.cloudfunctions.net/sendContactNotificationEmails","createTime":"2025-07-07T07:16:09.551184214Z","satisfiesPzi":true},{"name":"projects/presq-caf07/locations/us-central1/functions/emailSystemHealthCheck","buildConfig":{"build":"projects/11882363024/locations/us-central1/builds/da6790c9-96f4-41e9-9795-b952f4f17f9b","runtime":"nodejs22","entryPoint":"emailSystemHealthCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"emailSystemHealthCheck/function-source.zip","generation":"1751871724156765"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/presq-caf07/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"emailSystemHealthCheck/function-source.zip","generation":"1751871724156765"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/presq-caf07/serviceAccounts/11882363024-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/presq-caf07/locations/us-central1/services/emailsystemhealthcheck","timeoutSeconds":60,"environmentVariables":{"EMAIL_SERVICE":"zoho","EMAIL_HOST":"smtppro.zoho.in","EMAIL_PORT":"587","EMAIL_SECURE":"false","EMAIL_USER":"your-email@yourdomain.com","EMAIL_PASSWORD":"your-zoho-password","ADMIN_EMAIL":"info@presq.co.in","CC_EMAILS":"manager@presq.co.in,shivamanand252@gmail.com","COMPANY_NAME":"PreSQ Innovation","SUPPORT_EMAIL":"info@presq.co.in","WEBSITE_URL":"https://presq.co.in","ADMIN_PANEL_URL":"https://admin.presq.co.in","ALLOWED_ORIGINS":"https://presq.co.in,https://www.presq.co.in,https://admin.presq.co.in","NODE_ENV":"development","DEBUG":"true","FIREBASE_CONFIG":"{\"projectId\":\"presq-caf07\",\"storageBucket\":\"presq-caf07.firebasestorage.app\"}","GCLOUD_PROJECT":"presq-caf07","EVENTARC_CLOUD_EVENT_SOURCE":"projects/presq-caf07/locations/us-central1/services/emailSystemHealthCheck","FUNCTION_TARGET":"emailSystemHealthCheck","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://emailsystemhealthcheck-slx5j55rda-uc.a.run.app","serviceAccountEmail":"11882363024-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"emailsystemhealthcheck-00001-ler","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2025-07-07T07:03:34.350092422Z","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"7c3ff693e0e96cbf81e8aeb8de1e4effedd2e610"},"environment":"GEN_2","url":"https://us-central1-presq-caf07.cloudfunctions.net/emailSystemHealthCheck","createTime":"2025-07-07T07:02:04.425697218Z","satisfiesPzi":true},{"name":"projects/presq-caf07/locations/us-central1/functions/resendContactEmails","buildConfig":{"build":"projects/11882363024/locations/us-central1/builds/f1c3ff39-38df-4adc-af52-9ae0dc53c0c5","runtime":"nodejs22","entryPoint":"resendContactEmails","source":{"storageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"resendContactEmails/function-source.zip","generation":"1751871724053434"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/presq-caf07/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-11882363024-us-central1","object":"resendContactEmails/function-source.zip","generation":"1751871724053434"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/presq-caf07/serviceAccounts/11882363024-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/presq-caf07/locations/us-central1/services/resendcontactemails","timeoutSeconds":60,"environmentVariables":{"EMAIL_SERVICE":"zoho","EMAIL_HOST":"smtppro.zoho.in","EMAIL_PORT":"587","EMAIL_SECURE":"false","EMAIL_USER":"your-email@yourdomain.com","EMAIL_PASSWORD":"your-zoho-password","ADMIN_EMAIL":"info@presq.co.in","CC_EMAILS":"manager@presq.co.in,shivamanand252@gmail.com","COMPANY_NAME":"PreSQ Innovation","SUPPORT_EMAIL":"info@presq.co.in","WEBSITE_URL":"https://presq.co.in","ADMIN_PANEL_URL":"https://admin.presq.co.in","ALLOWED_ORIGINS":"https://presq.co.in,https://www.presq.co.in,https://admin.presq.co.in","NODE_ENV":"development","DEBUG":"true","FIREBASE_CONFIG":"{\"projectId\":\"presq-caf07\",\"storageBucket\":\"presq-caf07.firebasestorage.app\"}","GCLOUD_PROJECT":"presq-caf07","EVENTARC_CLOUD_EVENT_SOURCE":"projects/presq-caf07/locations/us-central1/services/resendContactEmails","FUNCTION_TARGET":"resendContactEmails","LOG_EXECUTION_ID":"true"},"maxInstanceCount":20,"ingressSettings":"ALLOW_ALL","uri":"https://resendcontactemails-slx5j55rda-uc.a.run.app","serviceAccountEmail":"11882363024-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"resendcontactemails-00001-bap","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2025-07-07T07:03:34.855763311Z","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"7c3ff693e0e96cbf81e8aeb8de1e4effedd2e610"},"environment":"GEN_2","url":"https://us-central1-presq-caf07.cloudfunctions.net/resendContactEmails","createTime":"2025-07-07T07:02:04.265483535Z","satisfiesPzi":true}]}
+[debug] [2025-07-07T08:43:13.309Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:13.309Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:13.309Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/presq-caf07/databases/(default) [none]
+[debug] [2025-07-07T08:43:15.028Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/presq-caf07/databases/(default) 200
+[debug] [2025-07-07T08:43:15.029Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/presq-caf07/databases/(default) {"name":"projects/presq-caf07/databases/(default)","uid":"44c837a5-fbca-49a2-86b2-09ba3d6e452a","createTime":"2025-07-03T19:24:01.289216Z","updateTime":"2025-07-03T19:24:01.289216Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-07-07T07:43:14.875002Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"etag":"IJOHna2tqo4DMPOeyre1oY4D"}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-07-07T08:43:15.036Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:15.036Z] Checked if tokens are valid: true, expires at: 1751881376161
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-07-07T08:43:15.037Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:15.037Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:15.037Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-07-07T08:43:15.037Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/pubsub.googleapis.com:generateServiceIdentity x-goog-quota-user=projects/11882363024
+[debug] [2025-07-07T08:43:15.037Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2025-07-07T08:43:15.038Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-07-07T08:43:15.038Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/eventarc.googleapis.com:generateServiceIdentity x-goog-quota-user=projects/11882363024
+[debug] [2025-07-07T08:43:15.038Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2025-07-07T08:43:15.812Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-07-07T08:43:15.812Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-11882363024@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"117623762738710434709"}}
+[debug] [2025-07-07T08:43:16.941Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-07-07T08:43:16.942Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/11882363024/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-11882363024@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"104748481337573572160"}}
+[debug] [2025-07-07T08:43:16.943Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:16.943Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:16.944Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 [none]
+[debug] [2025-07-07T08:43:18.453Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 200
+[debug] [2025-07-07T08:43:18.453Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/presq-caf07 {"projectNumber":"11882363024","projectId":"presq-caf07","lifecycleState":"ACTIVE","name":"presq","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-07-03T19:19:02.947467Z"}
+[debug] [2025-07-07T08:43:18.453Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:18.453Z] Checked if tokens are valid: true, expires at: 1751881376161
+[debug] [2025-07-07T08:43:18.453Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/11882363024 [none]
