@@ -24,6 +24,11 @@ echo ""
 echo "📧 Configuring Zoho Email Settings..."
 echo "======================================"
 
+# Set company ID
+read -p "Enter your Company ID (default: Xaq4HIl4v4uD1rIMpUmD): " COMPANY_ID
+COMPANY_ID=${COMPANY_ID:-Xaq4HIl4v4uD1rIMpUmD}
+firebase functions:config:set company.id="$COMPANY_ID"
+
 # Set Zoho SMTP configuration
 firebase functions:config:set email.service="zoho"
 firebase functions:config:set email.host="smtppro.zoho.in"
@@ -33,7 +38,7 @@ firebase functions:config:set email.require_tls="true"
 
 # Prompt for email credentials
 echo ""
-read -p "Enter your Zoho email address (e.g., contact@presq.co.in): " EMAIL_USER
+read -p "Enter your Zoho email address (e.g., admin@presq.co.in): " EMAIL_USER
 firebase functions:config:set email.user="$EMAIL_USER"
 
 echo ""

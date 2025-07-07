@@ -8,7 +8,7 @@ service cloud.firestore {
       match /contact_submissions/{submissionId} {
         // Public can write (contact forms)
         allow create: if true && 
-          request.resource.data.companyId == "Xaq4HIl4v4uD1rIMpUmD" &&
+          request.resource.data.companyId is string &&
           request.resource.data.source is string &&
           request.resource.data.status is string &&
           request.resource.data.fullName is string &&
