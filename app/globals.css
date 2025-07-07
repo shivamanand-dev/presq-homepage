@@ -79,6 +79,39 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Prevent layout shifts during hydration */
+  .nav-link-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .nav-link {
+    position: relative;
+    z-index: 1;
+    display: block;
+    padding: 4px 8px;
+    line-height: 1.5;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Smooth transitions for rough notation */
+  .rough-notation {
+    position: absolute !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Ensure underline appears below text */
+  .nav-link-container svg {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 @keyframes fade-in {
@@ -108,13 +141,4 @@
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
-}
-
-/* Hide scrollbar for carousel */
-.scrollbar-hide {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
 }
