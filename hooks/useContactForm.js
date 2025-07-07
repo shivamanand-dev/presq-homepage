@@ -22,6 +22,7 @@ export function useContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [submitMessage, setSubmitMessage] = useState('');
+  const [submissionData, setSubmissionData] = useState(null);
 
   // Validation functions
   const validateEmail = email => {
@@ -57,6 +58,7 @@ export function useContactForm() {
 
     // Required field validation
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    // Last name is optional, no validation needed
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
@@ -143,7 +145,7 @@ export function useContactForm() {
       if (result.success) {
         setSubmitStatus('success');
         setSubmitMessage(result.message);
-        resetForm();
+        setSubmissionData(result.data);
         console.log('✅ Contact form submitted successfully:', result.data);
       } else {
         setSubmitStatus('error');
@@ -165,6 +167,7 @@ export function useContactForm() {
     isSubmitting,
     submitStatus,
     submitMessage,
+    submissionData,
     isFormValid,
     handleInputChange,
     handleSubmit,

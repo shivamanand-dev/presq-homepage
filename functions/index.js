@@ -1,6 +1,7 @@
 /**
  * Firebase Cloud Functions for PreSQ Innovation
  * Email Notification System for Contact Form Submissions
+ * Updated for company-specific Firestore paths
  */
 
 const { onDocumentCreated } = require('firebase-functions/v2/firestore');
@@ -9,6 +10,9 @@ const { onRequest } = require('firebase-functions/v2/https');
 const { initializeApp } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const nodemailer = require('nodemailer');
+
+// Company ID for PreSQ Innovation (from environment variable)
+const COMPANY_ID = process.env.COMPANY_ID || 'Xaq4HIl4v4uD1rIMpUmD';
 
 // Initialize Firebase Admin SDK
 initializeApp();
@@ -177,16 +181,16 @@ const generateAdminEmailTemplate = submission => {
                 <div class="info-value">${submission.submissionId}</div>
               </div>
               <div class="info-item">
+                <div class="info-label">Company ID</div>
+                <div class="info-value">${submission.companyId}</div>
+              </div>
+              <div class="info-item">
                 <div class="info-label">Platform</div>
                 <div class="info-value">${submission.source}</div>
               </div>
               <div class="info-item">
                 <div class="info-label">UTM Source</div>
                 <div class="info-value">${submission.utmSource || 'Direct'}</div>
-              </div>
-              <div class="info-item">
-                <div class="info-label">UTM Campaign</div>
-                <div class="info-value">${submission.utmCampaign || 'None'}</div>
               </div>
             </div>
           </div>
@@ -329,13 +333,14 @@ const generateCustomerEmailTemplate = submission => {
 
 /**
  * Cloud Function: Send email notifications on new contact submissions
- * Triggers when a new document is added to any contact_submissions collection
+ * Updated trigger path to include companyId
  */
 exports.sendContactNotificationEmails = onDocumentCreated(
-  'Presq/contact_submissions/{platform}/{submissionId}',
+  'Presq/{companyId}/contact_submissions/{submissionId}',
   async event => {
     try {
-      console.log('🚀 New contact submission detected:', event.params.submissionId);
+      const { companyId, submissionId } = event.params;
+      console.log('🚀 New contact submission detected:', { companyId, submissionId });
 
       const submission = event.data.data();
       const transporter = createEmailTransporter();
@@ -354,7 +359,7 @@ exports.sendContactNotificationEmails = onDocumentCreated(
       const customerEmailOptions = {
         from: `"PreSQ Innovation" <${process.env.EMAIL_USER}>`,
         to: submission.email,
-        subject: `Thank you for contacting PreSQ Innovation - We'll respond within 2 working days`,
+        subject: `Thank you for contacting PreSQ Innovation - We'll respond within 24 hours`,
         html: generateCustomerEmailTemplate(submission),
       };
 
@@ -380,7 +385,7 @@ exports.sendContactNotificationEmails = onDocumentCreated(
         console.error('❌ Failed to send customer confirmation:', customerResult.reason);
       }
 
-      // Update submission with email status
+      // Update submission with email status using company-specific path
       await event.data.ref.update({
         emailNotifications: {
           adminEmailSent: adminResult.status === 'fulfilled',
@@ -393,24 +398,24 @@ exports.sendContactNotificationEmails = onDocumentCreated(
         updatedAt: FieldValue.serverTimestamp(),
       });
 
-      console.log(
-        '✅ Email notification process completed for submission:',
-        event.params.submissionId
-      );
+      console.log('✅ Email notification process completed for submission:', submissionId);
 
       return {
         success: true,
-        submissionId: event.params.submissionId,
+        companyId,
+        submissionId,
         adminEmailSent: adminResult.status === 'fulfilled',
         customerEmailSent: customerResult.status === 'fulfilled',
       };
     } catch (error) {
       console.error('❌ Error in email notification function:', error);
 
-      // Log error to Firestore for admin monitoring
-      await db.collection('Presq/system_logs/error_logs').add({
+      // Log error to Firestore for admin monitoring using company-specific path
+      const { companyId } = event.params;
+      await db.collection(`Presq/${companyId}/system_logs`).add({
         errorType: 'email_notification_error',
         submissionId: event.params.submissionId,
+        companyId,
         error: error.message,
         stack: error.stack,
         timestamp: FieldValue.serverTimestamp(),
@@ -423,7 +428,7 @@ exports.sendContactNotificationEmails = onDocumentCreated(
 
 /**
  * Cloud Function: Manual email sending for admin panel
- * Can be called from admin panel to resend emails
+ * Updated to use company-specific paths
  */
 exports.resendContactEmails = onCall(async request => {
   try {
@@ -432,10 +437,13 @@ exports.resendContactEmails = onCall(async request => {
       throw new Error('Admin access required');
     }
 
-    const { submissionId, emailType } = request.data; // emailType: 'admin', 'customer', or 'both'
+    const { submissionId, emailType, companyId } = request.data; // emailType: 'admin', 'customer', or 'both'
+    const targetCompanyId = companyId || request.auth.token.companyId || COMPANY_ID;
 
-    // Get submission data
-    const submissionDoc = await db.doc(`Presq/contact_submissions/website/${submissionId}`).get();
+    // Get submission data using company-specific path
+    const submissionDoc = await db
+      .doc(`Presq/${targetCompanyId}/contact_submissions/${submissionId}`)
+      .get();
 
     if (!submissionDoc.exists) {
       throw new Error('Submission not found');
@@ -468,7 +476,7 @@ exports.resendContactEmails = onCall(async request => {
       const customerEmailOptions = {
         from: `"PreSQ Innovation" <${process.env.EMAIL_USER}>`,
         to: submission.email,
-        subject: `Thank you for contacting PreSQ Innovation - We'll respond within 2 working days`,
+        subject: `Thank you for contacting PreSQ Innovation - We'll respond within 24 hours`,
         html: generateCustomerEmailTemplate(submission),
       };
 
@@ -481,7 +489,7 @@ exports.resendContactEmails = onCall(async request => {
     }
 
     console.log('✅ Manual email resend completed:', results);
-    return results;
+    return { ...results, companyId: targetCompanyId };
   } catch (error) {
     console.error('❌ Error in manual email resend:', error);
     throw error;
@@ -503,6 +511,8 @@ exports.emailSystemHealthCheck = onRequest(async (req, res) => {
       timestamp: new Date().toISOString(),
       emailService: 'operational',
       configuration: 'valid',
+      companyId: COMPANY_ID,
+      pathStructure: 'Presq/{companyId}/contact_submissions',
     });
   } catch (error) {
     console.error('❌ Email system health check failed:', error);
@@ -510,6 +520,7 @@ exports.emailSystemHealthCheck = onRequest(async (req, res) => {
       status: 'unhealthy',
       timestamp: new Date().toISOString(),
       error: error.message,
+      companyId: COMPANY_ID,
     });
   }
 });

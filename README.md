@@ -112,6 +112,12 @@ Presq/
    NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789012:web:abcdef123456
    NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 
+    # Company Configuration
+    NEXT_PUBLIC_COMPANY_ID=Xaq4HIl4v4uD1rIMpUmD
+
+    # Firebase Functions Configuration
+    NEXT_PUBLIC_FIREBASE_CONTACT_FUNCTION_URL=https://us-central1-presq-caf07.cloudfunctions.net/submitContactForm
+
    # Company Configuration
    NEXT_PUBLIC_COMPANY_ID=Xaq4HIl4v4uD1rIMpUmD
    ```
