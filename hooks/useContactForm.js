@@ -36,13 +36,15 @@ export function useContactForm() {
 
   // Check if all required fields are filled and valid
   const isFormValid = () => {
+    const messageLength = formData.message.trim().length;
+    const wordCount = formData.message.trim() ? formData.message.trim().split(/\s+/).length : 0;
+
     const requiredFields = {
       firstName: formData.firstName.trim(),
-      lastName: formData.lastName.trim(),
       email: formData.email.trim() && validateEmail(formData.email),
       phone: formData.phone.trim() && validatePhone(formData.phone),
       subject: formData.subject,
-      message: formData.message.trim() && formData.message.trim().length >= 10,
+      message: formData.message.trim() && messageLength >= 10 && wordCount >= 4,
       bestTime: formData.bestTime,
       gdprConsent: formData.gdprConsent,
     };
@@ -55,7 +57,6 @@ export function useContactForm() {
 
     // Required field validation
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
@@ -67,9 +68,18 @@ export function useContactForm() {
       newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
     }
     if (!formData.subject) newErrors.subject = 'Please select a subject';
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
-    if (formData.message.trim().length < 10)
-      newErrors.message = 'Message must be at least 10 characters long';
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    } else {
+      const messageLength = formData.message.trim().length;
+      const wordCount = formData.message.trim().split(/\s+/).length;
+
+      if (messageLength < 10) {
+        newErrors.message = 'Message must be at least 10 characters long';
+      } else if (wordCount < 4) {
+        newErrors.message = 'Message must contain at least 4 words';
+      }
+    }
     if (!formData.bestTime) newErrors.bestTime = 'Please select your preferred contact time';
     if (!formData.gdprConsent)
       newErrors.gdprConsent = 'You must agree to the privacy policy to continue';

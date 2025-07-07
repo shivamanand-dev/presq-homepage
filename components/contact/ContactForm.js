@@ -87,7 +87,7 @@ export default function ContactForm() {
               value={formData.lastName}
               onChange={handleInputChange}
               error={errors.lastName}
-              required
+              optional
               placeholder="Enter your last name"
               icon="user"
             />
@@ -153,7 +153,9 @@ export default function ContactForm() {
             rows={6}
             placeholder="Please provide details about your project, requirements, timeline, and any specific questions you have..."
             maxLength={500}
+            minLength={10}
             showCharCount
+            showWordCount
           />
 
           {/* Contact Preferences */}
