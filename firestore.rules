@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Root collection access for PreSQ Innovation
+    match /Presq/{document=**} {
+      
+      // Contact submissions - WRITE-ONLY for public forms, READ for admin
+      match /contact_submissions/{platform}/{submissionId} {
+        // Public can write (contact forms)
+        allow create: if true;
+        
+        // Only authenticated admins can read/update
+        allow read, update: if request.auth != null && 
+          request.auth.token.admin == true;
+        
+        // No delete operations allowed
+        allow delete: if false;
+      }
+      
+      // Analytics - WRITE-ONLY for tracking, READ for admin
+      match /analytics/{platform}/{eventId} {
+        // Public can write (analytics tracking)
+        allow create: if true;
+        
+        // Only authenticated admins can read
+        allow read: if request.auth != null && 
+          request.auth.token.admin == true;
+        
+        // No update/delete operations
+        allow update, delete: if false;
+      }
+      
+      // System logs - WRITE-ONLY for monitoring, READ for admin
+      match /system_logs/{logType}/{logId} {
+        // System can write (error logging)
+        allow create: if true;
+        
+        // Only authenticated admins can read
+        allow read: if request.auth != null && 
+          request.auth.token.admin == true;
+        
+        // No update/delete operations
+        allow update, delete: if false;
+      }
+      
+      // Admin users collection - Admin only
+      match /admin_users/{userId} {
+        allow read, write: if request.auth != null && 
+          request.auth.token.super_admin == true;
+      }
+      
+      // Business data - Admin only
+      match /business_data/{category}/{documentId} {
+        allow read, write: if request.auth != null && 
+          request.auth.token.admin == true;
+      }
+      
+      // Content management - Admin only
+      match /content_management/{category}/{documentId} {
+        allow read, write: if request.auth != null && 
+          request.auth.token.admin == true;
+      }
+      
+      // Default deny all other operations
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "contact_submissions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "platform",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "contact_submissions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "status",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "contact_submissions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "urgencyLevel",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "contact_submissions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "leadScore",
+                    "order": "DESCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "contact_submissions",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "customerSegment",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "analytics",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "eventName",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "timestamp",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "system_logs",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "errorType",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "timestamp",
+                    "order": "DESCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}
