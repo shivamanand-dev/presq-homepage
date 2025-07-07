@@ -1,0 +1,76 @@
+export const projectsData = [
+  {
+    id: 1,
+    title: 'PhysicsClasses Live',
+    subtitle: 'Interactive Quiz Learning Platform',
+    category: 'Educational Technology',
+    url: 'https://www.physicsclasseslive.com/',
+    image:
+      'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    description:
+      'A comprehensive quiz platform designed to revolutionize physics education through interactive learning, real-time analytics, and personalized progress tracking.',
+    year: '2024',
+    status: 'Live & Active',
+    color: 'blue',
+    gradient: 'from-blue-500 to-cyan-500',
+    bgGradient: 'from-blue-50 to-cyan-50',
+    darkGradient: 'from-blue-900 to-cyan-900',
+    features: [
+      'Interactive Quiz Interface',
+      'Real-time Analytics Dashboard',
+      'Progress Tracking System',
+      'Admin Management Panel',
+      'Bulk Content Upload',
+      'User Management System',
+    ],
+    techStack: ['React.js', 'Next.js', 'Node.js', 'Firebase', 'Analytics'],
+    metrics: {
+      users: '1000+',
+      questions: '500+',
+      uptime: '99.9%',
+      satisfaction: '95%',
+    },
+    highlights: [
+      'Advanced Learning Analytics',
+      'Real-time Performance Tracking',
+      'Scalable Architecture',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Green Lens',
+    subtitle: 'AI-Powered Plant Identification Platform',
+    category: 'AI & Machine Learning',
+    url: 'https://www.greenlens.tech/',
+    image:
+      'https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    description:
+      'Advanced AI-powered platform for plant identification and disease detection, featuring credit-based system, comprehensive analytics, and modern responsive design.',
+    year: '2024',
+    status: 'Live & Active',
+    color: 'green',
+    gradient: 'from-green-500 to-emerald-500',
+    bgGradient: 'from-green-50 to-emerald-50',
+    darkGradient: 'from-green-900 to-emerald-900',
+    features: [
+      'AI Plant Identification',
+      'Disease Detection System',
+      'Credit-based Pricing',
+      'User Management Portal',
+      'Analytics Dashboard',
+      'Modern Responsive UI',
+    ],
+    techStack: ['AI/ML', 'React', 'Firebase', 'TensorFlow', 'Analytics'],
+    metrics: {
+      accuracy: '98%',
+      plants: '10K+',
+      users: '500+',
+      scans: '50K+',
+    },
+    highlights: [
+      '98% AI Accuracy Rate',
+      'Advanced Disease Detection',
+      'Scalable ML Infrastructure',
+    ],
+  },
+];
