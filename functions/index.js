@@ -55,7 +55,7 @@ const generateAdminEmailTemplate = submission => {
   };
 
   const urgencyColor = urgencyColors[submission.priority || 'normal'] || '#6b7280';
-  const valueColor = valueColors[submission.estimatedValue] || '#6b7280';
+  const valueColor = valueColors[submission.estimatedValue || 'medium'] || '#6b7280';
 
   return `
     <!DOCTYPE html>
@@ -158,11 +158,11 @@ const generateAdminEmailTemplate = submission => {
                 <div class="metric-label">Lead Score</div>
               </div>
               <div class="metric">
-                <div class="metric-value" style="color: ${valueColor};">${submission.estimatedValue.toUpperCase()}</div>
+                <div class="metric-value" style="color: ${valueColor};">${(submission.estimatedValue || 'MEDIUM').toUpperCase()}</div>
                 <div class="metric-label">Est. Value</div>
               </div>
               <div class="metric">
-                <div class="metric-value" style="color: #8b5cf6;">${submission.customerSegment.toUpperCase()}</div>
+                <div class="metric-value" style="color: #8b5cf6;">${(submission.customerSegment || 'UNKNOWN').toUpperCase()}</div>
                 <div class="metric-label">Segment</div>
               </div>
               <div class="metric">
@@ -350,9 +350,9 @@ exports.sendContactNotificationEmails = onDocumentCreated(
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
         to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
         cc: process.env.CC_EMAILS || '', // Optional CC emails
-        subject: `🚨 New ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
+        subject: `🚨 New ${(submission.urgencyLevel || 'NORMAL').toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
-        priority: submission.urgencyLevel === 'high' ? 'high' : 'normal',
+        priority: (submission.urgencyLevel || 'normal') === 'high' ? 'high' : 'normal',
       };
 
       // Customer confirmation email
@@ -459,7 +459,7 @@ exports.resendContactEmails = onCall(async request => {
       const adminEmailOptions = {
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
         to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
-        subject: `🔄 RESENT: ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
+        subject: `🔄 RESENT: ${(submission.urgencyLevel || 'NORMAL').toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
       };
 
