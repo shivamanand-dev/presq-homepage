@@ -30,7 +30,7 @@ const createEmailTransporter = () => {
     },
   };
 
-  return nodemailer.createTransporter(emailConfig);
+  return nodemailer.createTransport(emailConfig);
 };
 
 /**
