@@ -25,8 +25,8 @@ const createEmailTransporter = () => {
     secure: false, // Use STARTTLS
     requireTLS: true,
     auth: {
-      user: process.env.EMAIL_USER || '',
-      pass: process.env.EMAIL_PASSWORD || '', // Zoho email password
+      user: process.env.EMAIL_USER || 'info@presq.co.in',
+      pass: process.env.EMAIL_PASSWORD || 'Kjjv@nxtn8UN45W', // Zoho email password
     },
   };
 
