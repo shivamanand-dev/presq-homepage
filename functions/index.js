@@ -50,7 +50,7 @@ const generateAdminEmailTemplate = submission => {
     low: '#6b7280',
   };
 
-  const urgencyColor = urgencyColors[submission.urgencyLevel] || '#6b7280';
+  const urgencyColor = urgencyColors[submission.priority || 'normal'] || '#6b7280';
   const valueColor = valueColors[submission.estimatedValue] || '#6b7280';
 
   return `
@@ -100,7 +100,7 @@ const generateAdminEmailTemplate = submission => {
         <div class="content">
           <!-- Priority Badge -->
           <div class="priority-badge" style="background-color: ${urgencyColor}; color: white;">
-            ${submission.urgencyLevel.toUpperCase()} PRIORITY
+            ${(submission.priority || 'NORMAL').toUpperCase()} PRIORITY
           </div>
 
           <!-- Contact Information -->
@@ -136,7 +136,7 @@ const generateAdminEmailTemplate = submission => {
               </div>
               <div class="info-item">
                 <div class="info-label">Preferred Contact</div>
-                <div class="info-value">${submission.contactMethod} (${submission.bestTime})</div>
+                <div class="info-value">${submission.contactMethod || 'email'} (${submission.bestTime || 'anytime'})</div>
               </div>
             </div>
             <div class="message-box">
@@ -162,8 +162,8 @@ const generateAdminEmailTemplate = submission => {
                 <div class="metric-label">Segment</div>
               </div>
               <div class="metric">
-                <div class="metric-value" style="color: ${urgencyColor};">${submission.urgencyLevel.toUpperCase()}</div>
-                <div class="metric-label">Urgency</div>
+                <div class="metric-value" style="color: ${urgencyColor};">${(submission.priority || 'NORMAL').toUpperCase()}</div>
+                <div class="metric-label">Priority</div>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ const generateAdminEmailTemplate = submission => {
               </div>
               <div class="info-item">
                 <div class="info-label">Platform</div>
-                <div class="info-value">${submission.platform}</div>
+                <div class="info-value">${submission.source}</div>
               </div>
               <div class="info-item">
                 <div class="info-label">UTM Source</div>
@@ -194,7 +194,7 @@ const generateAdminEmailTemplate = submission => {
           <!-- Call to Action -->
           <div class="cta-section">
             <h3 style="margin: 0 0 10px; color: white;">⚡ Action Required</h3>
-            <p style="margin: 0; opacity: 0.9;">This ${submission.urgencyLevel} priority lead requires your attention.</p>
+            <p style="margin: 0; opacity: 0.9;">This ${submission.priority || 'normal'} priority lead requires your attention.</p>
             <a href="https://admin.presq.co.in/contacts/${submission.submissionId}" class="cta-button">
               View in Admin Panel
             </a>
@@ -204,7 +204,7 @@ const generateAdminEmailTemplate = submission => {
         <!-- Footer -->
         <div class="footer">
           <p>PreSQ Innovation Admin Notification System</p>
-          <p>Submission received on ${new Date(submission.createdAt.seconds * 1000).toLocaleString()}</p>
+          <p>Submission received on ${submission.createdAt ? new Date(submission.createdAt.seconds * 1000).toLocaleString() : new Date().toLocaleString()}</p>
         </div>
       </div>
     </body>
@@ -294,7 +294,7 @@ const generateCustomerEmailTemplate = submission => {
               <div class="contact-item">
                 <div class="contact-icon">✉️</div>
                 <strong>Email Us</strong><br>
-                <a href="mailto:contact@presq.co.in" style="color: #3b82f6; text-decoration: none;">contact@presq.co.in</a>
+                <a href="mailto:admin@presq.co.in" style="color: #3b82f6; text-decoration: none;">admin@presq.co.in</a>
               </div>
             </div>
           </div>
@@ -343,7 +343,7 @@ exports.sendContactNotificationEmails = onDocumentCreated(
       // Admin notification email
       const adminEmailOptions = {
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
-        to: process.env.ADMIN_EMAIL || 'contact@presq.co.in',
+        to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
         cc: process.env.CC_EMAILS || '', // Optional CC emails
         subject: `🚨 New ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
@@ -450,7 +450,7 @@ exports.resendContactEmails = onCall(async request => {
     if (emailType === 'admin' || emailType === 'both') {
       const adminEmailOptions = {
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
-        to: process.env.ADMIN_EMAIL || 'contact@presq.co.in',
+        to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
         subject: `🔄 RESENT: ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
       };

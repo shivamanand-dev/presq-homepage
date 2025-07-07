@@ -1,25 +1,29 @@
 {
     "indexes": [
         {
-            "collectionGroup": "contact_submissions",
+            "collectionGroup": "Presq",
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "platform",
+                    "fieldPath": "companyId",
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "createdAt",
-                    "order": "DESCENDING"
-                }
-            ]
-        },
-        {
-            "collectionGroup": "contact_submissions",
-            "queryScope": "COLLECTION",
-            "fields": [
+                    "fieldPath": "source",
+                    "order": "ASCENDING"
+                },
                 {
                     "fieldPath": "status",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "Presq",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "companyId",
                     "order": "ASCENDING"
                 },
                 {
@@ -29,37 +33,31 @@
             ]
         },
         {
-            "collectionGroup": "contact_submissions",
+            "collectionGroup": "Presq",
             "queryScope": "COLLECTION",
             "fields": [
                 {
-                    "fieldPath": "urgencyLevel",
+                    "fieldPath": "companyId",
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "createdAt",
-                    "order": "DESCENDING"
-                }
-            ]
-        },
-        {
-            "collectionGroup": "contact_submissions",
-            "queryScope": "COLLECTION",
-            "fields": [
-                {
-                    "fieldPath": "leadScore",
-                    "order": "DESCENDING"
+                    "fieldPath": "priority",
+                    "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "createdAt",
+                    "fieldPath": "updatedAt",
                     "order": "DESCENDING"
                 }
             ]
         },
         {
-            "collectionGroup": "contact_submissions",
+            "collectionGroup": "Presq",
             "queryScope": "COLLECTION",
             "fields": [
+                {
+                    "fieldPath": "companyId",
+                    "order": "ASCENDING"
+                },
                 {
                     "fieldPath": "customerSegment",
                     "order": "ASCENDING"
@@ -71,7 +69,25 @@
             ]
         },
         {
-            "collectionGroup": "analytics",
+            "collectionGroup": "Presq",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "companyId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "leadScore",
+                    "order": "DESCENDING"
+                },
+                {
+                    "fieldPath": "updatedAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "Presq",
             "queryScope": "COLLECTION",
             "fields": [
                 {
@@ -85,7 +101,25 @@
             ]
         },
         {
-            "collectionGroup": "system_logs",
+            "collectionGroup": "Presq",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "companyId",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "eventName",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "Presq",
             "queryScope": "COLLECTION",
             "fields": [
                 {
@@ -93,7 +127,7 @@
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "timestamp",
+                    "fieldPath": "createdAt",
                     "order": "DESCENDING"
                 }
             ]
