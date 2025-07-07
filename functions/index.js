@@ -294,7 +294,7 @@ const generateCustomerEmailTemplate = submission => {
               <div class="contact-item">
                 <div class="contact-icon">✉️</div>
                 <strong>Email Us</strong><br>
-                <a href="mailto:admin@presq.co.in" style="color: #3b82f6; text-decoration: none;">admin@presq.co.in</a>
+                <a href="mailto:contact@presq.co.in" style="color: #3b82f6; text-decoration: none;">contact@presq.co.in</a>
               </div>
             </div>
           </div>
@@ -343,7 +343,7 @@ exports.sendContactNotificationEmails = onDocumentCreated(
       // Admin notification email
       const adminEmailOptions = {
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
-        to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
+        to: process.env.ADMIN_EMAIL || 'contact@presq.co.in',
         cc: process.env.CC_EMAILS || '', // Optional CC emails
         subject: `🚨 New ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
@@ -450,7 +450,7 @@ exports.resendContactEmails = onCall(async request => {
     if (emailType === 'admin' || emailType === 'both') {
       const adminEmailOptions = {
         from: `"PreSQ Innovation System" <${process.env.EMAIL_USER}>`,
-        to: process.env.ADMIN_EMAIL || 'admin@presq.co.in',
+        to: process.env.ADMIN_EMAIL || 'contact@presq.co.in',
         subject: `🔄 RESENT: ${submission.urgencyLevel.toUpperCase()} Priority Lead - ${submission.subject}`,
         html: generateAdminEmailTemplate(submission),
       };

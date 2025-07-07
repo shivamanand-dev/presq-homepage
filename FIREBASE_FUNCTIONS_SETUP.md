@@ -38,7 +38,7 @@ firebase functions:config:set email.host="smtppro.zoho.in"
 firebase functions:config:set email.port="587"
 firebase functions:config:set email.user="your-email@yourdomain.com"
 firebase functions:config:set email.password="your-zoho-password"
-firebase functions:config:set email.admin_email="admin@presq.co.in"
+firebase functions:config:set email.admin_email="contact@presq.co.in"
 ```
 
 #### Option B: Gmail (Alternative)
@@ -49,7 +49,7 @@ firebase functions:config:set email.host="smtp.gmail.com"
 firebase functions:config:set email.port="587"
 firebase functions:config:set email.user="your-email@gmail.com"
 firebase functions:config:set email.password="your-app-password"
-firebase functions:config:set email.admin_email="admin@presq.co.in"
+firebase functions:config:set email.admin_email="contact@presq.co.in"
 ```
 
 ### 4. Deploy Functions
@@ -89,7 +89,7 @@ cd functions && npm install
 # Configure email
 firebase functions:config:set email.user="your-email@gmail.com"
 firebase functions:config:set email.password="your-app-password"
-firebase functions:config:set email.admin_email="admin@presq.co.in"
+firebase functions:config:set email.admin_email="contact@presq.co.in"
 
 # Deploy immediately (no build step needed)
 firebase deploy --only functions
@@ -123,7 +123,7 @@ firebase deploy --only functions
 # Required
 firebase functions:config:set email.user="your-email@domain.com"
 firebase functions:config:set email.password="your-password"
-firebase functions:config:set email.admin_email="admin@presq.co.in"
+firebase functions:config:set email.admin_email="contact@presq.co.in"
 
 # Optional
 firebase functions:config:set email.cc_emails="manager@presq.co.in,support@presq.co.in"
@@ -320,7 +320,7 @@ For issues with email setup:
 
 - Check Firebase Console logs
 - Review email service provider documentation
-- Contact PreSQ Innovation support: admin@presq.co.in
+- Contact PreSQ Innovation support: contact@presq.co.in
 
 ---
 

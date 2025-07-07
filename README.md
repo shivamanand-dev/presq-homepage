@@ -389,7 +389,7 @@ This project is proprietary software owned by PreSQ Innovation.
 
 For technical support or questions:
 
-- Email: admin@presq.co.in
+- Email: contact@presq.co.in
 - Phone: +91 8448334698
 
 ---

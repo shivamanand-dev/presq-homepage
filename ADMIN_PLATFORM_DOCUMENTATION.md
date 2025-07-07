@@ -589,7 +589,7 @@ GET    /api/system/performance         # Performance metrics
 
 For questions about the data structure or integration:
 
-- **Email**: admin@presq.co.in
+- **Email**: contact@presq.co.in
 - **Phone**: +91 8448334698
 - **Data Collection Platform**: This current platform
 - **Admin Platform**: To be developed separately

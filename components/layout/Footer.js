@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Facebook, Twitter, Instagram, Phone, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
@@ -6,54 +6,55 @@ import Link from 'next/link';
 export default function Footer() {
   // Updated JSON data with social media links
   const footerData = {
-    "company": "PreSQ Innovation",
-    "description": "Expert Web Development, SEO, and Digital Marketing Services Tailored for Your Success.",
-    "links": {
-      "terms": "Terms and Conditions",
-      "privacy": "Privacy Policy"
+    company: 'PreSQ Innovation',
+    description:
+      'Expert Web Development, SEO, and Digital Marketing Services Tailored for Your Success.',
+    links: {
+      terms: 'Terms and Conditions',
+      privacy: 'Privacy Policy',
     },
-    "socialMedia": [
+    socialMedia: [
       {
-        "name": "Facebook", 
-        "link": "https://www.facebook.com/presqinnovation/"
-      }, 
+        name: 'Facebook',
+        link: 'https://www.facebook.com/presqinnovation/',
+      },
       {
-        "name": "X", 
-        "link": "https://x.com/PreSQInnovation"
-      }, 
+        name: 'X',
+        link: 'https://x.com/PreSQInnovation',
+      },
       {
-        "name": "Instagram", 
-        "link": "https://www.instagram.com/presq.co.in/"
-      }
+        name: 'Instagram',
+        link: 'https://www.instagram.com/presq.co.in/',
+      },
     ],
-    "webDesignThemes": [
-      "Corporate",
-      "E-Commerce",
-      "Portfolio",
-      "Blogs and Personal Websites",
-      "Landing Pages",
-      "Membership Websites"
+    webDesignThemes: [
+      'Corporate',
+      'E-Commerce',
+      'Portfolio',
+      'Blogs and Personal Websites',
+      'Landing Pages',
+      'Membership Websites',
     ],
-    "services": [
-      "Web Development",
-      "App Development",
-      "Analytics",
-      "Search Engine Optimization",
-      "Digital Marketing"
+    services: [
+      'Web Development',
+      'App Development',
+      'Analytics',
+      'Search Engine Optimization',
+      'Digital Marketing',
     ],
-    "contact": {
-      "helpText": "Need help or have a question?",
-      "phone": "+91 8448334698",
-      "email": "info@presq.co.in"
+    contact: {
+      helpText: 'Need help or have a question?',
+      phone: '+91 8448334698',
+      email: 'contact@presq.co.in',
     },
-    "copyright": "© 2025 - PreSQ Innovation Private Limited"
+    copyright: '© 2025 - PreSQ Innovation Private Limited',
   };
 
   // Social media icons mapping
   const socialIcons = {
     Facebook: Facebook,
     X: Twitter,
-    Instagram: Instagram
+    Instagram: Instagram,
   };
 
   return (
@@ -68,7 +69,6 @@ export default function Footer() {
       <div className="relative z-10">
         {/* Main Footer Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          
           {/* Company Header */}
           <div className="text-center mb-12 lg:mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
@@ -83,7 +83,6 @@ export default function Footer() {
 
           {/* Main Footer Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
-            
             {/* Services Column */}
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white mb-4 relative">
@@ -93,8 +92,8 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerData.services.map((service, index) => (
                   <li key={index}>
-                    <Link 
-                      href="#" 
+                    <Link
+                      href="#"
                       className="text-gray-300 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform inline-block"
                     >
                       {service}
@@ -113,8 +112,8 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerData.webDesignThemes.map((theme, index) => (
                   <li key={index}>
-                    <Link 
-                      href="#" 
+                    <Link
+                      href="#"
                       className="text-gray-300 hover:text-purple-400 transition-colors duration-300 hover:translate-x-1 transform inline-block"
                     >
                       {theme}
@@ -132,13 +131,13 @@ export default function Footer() {
               </h3>
               <div className="space-y-4">
                 <p className="text-gray-300 mb-4">{footerData.contact.helpText}</p>
-                
+
                 {/* Phone */}
                 <div className="flex items-center space-x-3 group">
                   <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Phone className="w-5 h-5 text-white" />
                   </div>
-                  <a 
+                  <a
                     href={`tel:${footerData.contact.phone}`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-300"
                   >
@@ -151,7 +150,7 @@ export default function Footer() {
                   <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Mail className="w-5 h-5 text-white" />
                   </div>
-                  <a 
+                  <a
                     href={`mailto:${footerData.contact.email}`}
                     className="text-gray-300 hover:text-purple-400 transition-colors duration-300"
                   >
@@ -167,7 +166,7 @@ export default function Footer() {
                 Connect With Us
                 <div className="absolute bottom-0 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
               </h3>
-              
+
               {/* Social Media Icons */}
               <div className="flex space-x-4">
                 {footerData.socialMedia.map((platform, index) => {
@@ -175,9 +174,9 @@ export default function Footer() {
                   const gradients = [
                     'from-blue-500 to-blue-600',
                     'from-gray-700 to-gray-800',
-                    'from-pink-500 to-purple-600'
+                    'from-pink-500 to-purple-600',
                   ];
-                  
+
                   return (
                     <a
                       key={platform.name}
@@ -215,23 +214,20 @@ export default function Footer() {
         <div className="border-t border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              
               {/* Copyright */}
-              <div className="text-gray-400 text-sm">
-                {footerData.copyright}
-              </div>
+              <div className="text-gray-400 text-sm">{footerData.copyright}</div>
 
               {/* Legal Links */}
               <div className="flex space-x-6">
-                <Link 
-                  href="/terms" 
+                <Link
+                  href="/terms"
                   className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300"
                 >
                   {footerData.links.terms}
                 </Link>
                 <span className="text-gray-600">|</span>
-                <Link 
-                  href="/privacy" 
+                <Link
+                  href="/privacy"
                   className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-300"
                 >
                   {footerData.links.privacy}

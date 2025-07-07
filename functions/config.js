@@ -16,11 +16,11 @@ const defaultConfig = {
     secure: false,
     requireTLS: true,
     companyName: 'PreSQ Innovation',
-    supportEmail: 'admin@presq.co.in',
+    supportEmail: 'contact@presq.co.in',
     websiteUrl: 'https://presq.co.in',
     user: '', // Set via Firebase config
     password: '', // Set via Firebase config
-    adminEmail: 'admin@presq.co.in', // Set via Firebase config
+    adminEmail: 'info@presq.co.in', // Set via Firebase config
   },
   adminPanelUrl: 'https://admin.presq.co.in',
   allowedOrigins: ['https://presq.co.in', 'https://www.presq.co.in', 'https://admin.presq.co.in'],

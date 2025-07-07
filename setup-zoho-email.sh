@@ -33,7 +33,7 @@ firebase functions:config:set email.require_tls="true"
 
 # Prompt for email credentials
 echo ""
-read -p "Enter your Zoho email address (e.g., admin@presq.co.in): " EMAIL_USER
+read -p "Enter your Zoho email address (e.g., contact@presq.co.in): " EMAIL_USER
 firebase functions:config:set email.user="$EMAIL_USER"
 
 echo ""
