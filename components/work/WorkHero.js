@@ -35,7 +35,7 @@ export default function WorkHero() {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8 font-medium">
             Discover the innovative solutions we&apos;ve crafted for our clients. Each project
             represents our commitment to excellence and cutting-edge technology.
           </p>

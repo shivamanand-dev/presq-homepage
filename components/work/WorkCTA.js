@@ -30,7 +30,7 @@ export default function WorkCTA() {
             Let&apos;s Build Something Amazing Together
           </h2>
 
-          <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+          <p className="text-xl text-blue-100 mb-8 leading-relaxed font-medium">
             Ready to transform your ideas into reality? Our team is here to help you create
             exceptional digital experiences that drive results and exceed expectations.
           </p>
@@ -57,7 +57,7 @@ export default function WorkCTA() {
             {stats.map((stat, index) => (
               <div key={stat.label} className="text-center">
                 <div className="text-3xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-blue-200 text-sm">{stat.label}</div>
+                <div className="text-blue-200 text-sm font-medium">{stat.label}</div>
               </div>
             ))}
           </div>

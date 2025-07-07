@@ -49,7 +49,7 @@ export default function ProjectCarousel() {
             </span>
           </h2>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
             Explore our most recent projects that showcase innovation, creativity, and technical
             excellence.
           </p>

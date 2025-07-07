@@ -77,7 +77,7 @@ export default function ServicesShowcase() {
                 <service.icon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{service.description}</p>
+              <p className="text-gray-700 leading-relaxed font-medium">{service.description}</p>
             </div>
           ))}
         </div>
