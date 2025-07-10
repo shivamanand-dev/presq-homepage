@@ -146,6 +146,8 @@ export function useContactForm() {
         setSubmitStatus('success');
         setSubmitMessage(result.message);
         setSubmissionData(result.data);
+        // Scroll to top on successful submission
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         console.log('✅ Contact form submitted successfully:', result.data);
       } else {
         setSubmitStatus('error');

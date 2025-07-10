@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { saveContactSubmission } from '@/lib/contactService';
 import FormField from './form/FormField';
@@ -11,6 +11,7 @@ import FormCheckbox from './form/FormCheckbox';
 import FormPhoneField from './form/FormPhoneField';
 import StatusMessage from './form/StatusMessage';
 import SubmitButton from './form/SubmitButton';
+import SuccessModal from './form/SuccessModal';
 import { useContactForm } from '@/hooks/useContactForm';
 
 export default function ContactForm() {
@@ -20,11 +21,28 @@ export default function ContactForm() {
     isSubmitting,
     submitStatus,
     submitMessage,
+    submissionData,
     isFormValid,
     handleInputChange,
     handleSubmit,
     resetForm,
   } = useContactForm();
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Show success modal when form is successfully submitted
+  useEffect(() => {
+    if (submitStatus === 'success') {
+      setShowSuccessModal(true);
+      // Scroll to top when success modal opens
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [submitStatus]);
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    resetForm();
+  };
 
   const subjectOptions = [
     'Web Development',
@@ -205,6 +223,13 @@ export default function ContactForm() {
           <SubmitButton isSubmitting={isSubmitting} isFormValid={isFormValid()} />
         </form>
       </div>
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={handleCloseModal}
+        submissionData={submissionData}
+      />
     </div>
   );
 }
