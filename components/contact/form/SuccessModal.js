@@ -156,41 +156,6 @@ export default function SuccessModal({ isOpen, onClose, submissionData }) {
                   </div>
                 </div>
 
-                {/* Submission Details */}
-                {submissionData && (
-                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                    <h4 className="font-semibold text-gray-900 mb-3 text-center">
-                      Submission Details
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Subject:</span>
-                        <span className="font-medium text-gray-900">{submissionData.subject}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Lead Score:</span>
-                        <span className="font-medium text-blue-600">
-                          {submissionData.leadScore}/100
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Priority:</span>
-                        <span
-                          className={`font-medium capitalize ${
-                            submissionData.urgencyLevel === 'high'
-                              ? 'text-red-600'
-                              : submissionData.urgencyLevel === 'medium'
-                                ? 'text-orange-600'
-                                : 'text-green-600'
-                          }`}
-                        >
-                          {submissionData.urgencyLevel}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {/* Contact Information */}
                 <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-100">
                   <h4 className="font-semibold text-gray-900 mb-4 text-center">
